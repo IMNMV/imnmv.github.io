@@ -2,13 +2,6 @@
 title: ""
 ---
 
-::: {.d-flex .justify-content-between .align-items-start .mt-4}
-::: {.flex-grow-1}
-Hello! I'm **Nykko Vitali** (NV).
-
-You can find my [CV here](cv.html) and connect with me on [LinkedIn](https://www.linkedin.com/in/nykko-vitali-0a4826158/).
-:::
-::: {.ms-3}
-![](images/profile.jpg){width="120" height="120" .rounded-circle}
-:::
+::: {.profile-top-left}
+![](images/profile.jpg){.profile-image width="150" height="150"}
 :::
