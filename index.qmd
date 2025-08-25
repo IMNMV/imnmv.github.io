@@ -2,7 +2,7 @@
 title: ""
 ---
 
-::: {.d-flex .justify-content-between .align-items-start}
+::: {.d-flex .justify-content-between .align-items-start .mt-4}
 ::: {.flex-grow-1}
 Hello! I'm **Nykko Vitali** (NV).
 
