@@ -1,20 +1,17 @@
-
 project:
   type: website
   output-dir: docs
 
 website:
-  title: "I AM NV"
+  title: ""
   description: "Nice to meet you :)"
   navbar:
-    background: "#1a1a1a"
+    background: "#2d5a27"
     foreground: "#ffffff"
     title: "<span class=\"logo-text\">I AM NV</span>"
     left:
       - href: index.qmd
         text: Home
-      - href: about.qmd
-        text: About
       - href: cv.qmd
         text: CV
     right:
@@ -23,7 +20,7 @@ website:
         target: _blank
   
   page-footer:
-    background: "#1a1a1a" 
+    background: "#2d5a27" 
     foreground: "#ffffff"
     center: |
       <div style="text-align: center; font-style: italic; margin-top: 1rem;">
@@ -39,4 +36,3 @@ format:
     toc: false
     smooth-scroll: true
     anchor-sections: true
-

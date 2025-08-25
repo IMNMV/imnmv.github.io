@@ -2,16 +2,7 @@
 title: "Curriculum Vitae"
 ---
 
-::: {.container .mt-4}
-::: {.row}
-::: {.col-lg-10 .offset-lg-1}
-::: {.modern-card}
-
 ## My Professional Journey
-
-Welcome to my professional story. Below you'll find a comprehensive overview of my experience, skills, and accomplishments.
-
-### Download My CV
 
 For the most up-to-date and detailed version of my curriculum vitae, please download the PDF version:
 
@@ -19,28 +10,4 @@ For the most up-to-date and detailed version of my curriculum vitae, please down
 [📄 Download CV (PDF)](files/VitaliNykko_CV_24AUG2025.pdf){.btn .btn-primary .btn-lg}
 :::
 
-### Quick Overview
-
-This document contains detailed information about:
-
-- **Professional Experience**: A comprehensive history of my roles and responsibilities
-- **Education & Qualifications**: Academic background and certifications
-- **Skills & Competencies**: Technical and soft skills I've developed
-- **Achievements**: Key accomplishments and recognitions
-- **Projects**: Notable work and initiatives I've been involved in
-
-### Always Evolving
-
-My CV is a living document that reflects my ongoing journey of growth and learning. I regularly update it to include new experiences, skills, and achievements.
-
 If you have any questions about my background or would like to discuss potential opportunities, please don't hesitate to reach out via [LinkedIn](https://www.linkedin.com/in/nykko-vitali-0a4826158/).
-
----
-
-*"The best investment you can make is in yourself. The more you learn, the more you earn and the more self-confidence you will have."* - Warren Buffett
-
-:::
-:::
-:::
-:::
-

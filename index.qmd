@@ -1,43 +1,14 @@
 ---
 title: ""
-page-layout: full
 ---
 
-::: {.hero-section}
-::: {.hero-content}
-# I AM NV {.hero-title}
+::: {.d-flex .justify-content-between .align-items-start}
+::: {.flex-grow-1}
+Hello! I'm **Nykko Vitali** (NV).
 
-### Nice to meet you :) {.hero-subtitle}
-
-![Profile Picture](images/profile.jpg){.profile-image width="200" height="200"}
-
-*"Anything you know about cannot be you."* - Alfred Korzybski {.hero-quote}
+You can find my [CV here](cv.html) and connect with me on [LinkedIn](https://www.linkedin.com/in/nykko-vitali-0a4826158/).
+:::
+::: {.ms-3}
+![](images/profile.jpg){width="120" height="120" .rounded-circle}
 :::
 :::
-
-::: {.container-fluid .mt-5}
-::: {.row .justify-content-center}
-::: {.col-lg-8}
-::: {.modern-card}
-
-## Welcome to My Digital Space
-
-Hello! I'm **Nykko Vitali** (NV), and I'm delighted you've found your way here. This is where I share my thoughts, experiences, and the work that matters to me.
-
-### What You'll Find Here
-
-- **About Me**: Learn more about my background, interests, and what drives me
-- **My CV**: A comprehensive look at my professional journey and accomplishments  
-- **Connect**: Let's start a conversation - you can find me on [LinkedIn](https://www.linkedin.com/in/nykko-vitali-0a4826158/)
-
-### Let's Connect
-
-I believe in the power of meaningful connections and conversations. Whether you're here out of curiosity, professional interest, or serendipity, I'm glad you're here.
-
-Feel free to explore, and don't hesitate to reach out. After all, every great journey begins with a simple "Nice to meet you." 😊
-
-:::
-:::
-:::
-:::
-
