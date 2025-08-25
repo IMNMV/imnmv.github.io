@@ -1,0 +1,42 @@
+
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "I AM NV"
+  description: "Nice to meet you :)"
+  navbar:
+    background: "#1a1a1a"
+    foreground: "#ffffff"
+    title: "<span class=\"logo-text\">I AM NV</span>"
+    left:
+      - href: index.qmd
+        text: Home
+      - href: about.qmd
+        text: About
+      - href: cv.qmd
+        text: CV
+    right:
+      - icon: linkedin
+        href: https://www.linkedin.com/in/nykko-vitali-0a4826158/
+        target: _blank
+  
+  page-footer:
+    background: "#1a1a1a" 
+    foreground: "#ffffff"
+    center: |
+      <div style="text-align: center; font-style: italic; margin-top: 1rem;">
+        "Anything you know about cannot be you." - Alfred Korzybski
+      </div>
+
+format:
+  html:
+    theme: 
+      - flatly
+      - styles.scss
+    css: custom.css
+    toc: false
+    smooth-scroll: true
+    anchor-sections: true
+

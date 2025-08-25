@@ -1,0 +1,47 @@
+---
+title: "About Me"
+---
+
+::: {.container .mt-4}
+::: {.row}
+::: {.col-lg-8 .offset-lg-2}
+::: {.modern-card}
+
+## Getting to Know NV
+
+Hello! I'm Nykko Vitali, but you can call me **NV**. This space is where I share a bit about who I am beyond the professional facade.
+
+### My Philosophy
+
+The quote that resonates deeply with me is from Alfred Korzybski: *"Anything you know about cannot be you."* This profound statement reminds me that we are always more than our definitions, categories, and labels. We exist beyond the boxes others (and we ourselves) try to put us in.
+
+### What Drives Me
+
+- **Continuous Learning**: I believe that growth happens when we step outside our comfort zones
+- **Authentic Connections**: Real relationships are built on genuine understanding and mutual respect
+- **Purpose-Driven Work**: Everything I do is guided by a desire to make a meaningful impact
+
+### Beyond the Professional
+
+When I'm not working, you might find me:
+
+- Exploring new ideas through books and conversations
+- Seeking out experiences that challenge my perspectives  
+- Building connections with interesting people from all walks of life
+- Contemplating the mysteries of existence (yes, I'm that person!)
+
+### Let's Connect
+
+I'm always interested in meeting new people and having meaningful conversations. Whether you want to discuss philosophy, share an interesting idea, or just say hello, I'd love to hear from you.
+
+You can reach me on [LinkedIn](https://www.linkedin.com/in/nykko-vitali-0a4826158/) or through any of the other channels listed on this site.
+
+---
+
+*"Nice to meet you" isn't just a greeting—it's an invitation to discover the infinite possibilities that exist in every new connection.*
+
+:::
+:::
+:::
+:::
+

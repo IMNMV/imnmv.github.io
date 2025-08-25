@@ -1,0 +1,47 @@
+
+/* Additional custom styles */
+body {
+  line-height: 1.6;
+  font-smooth: antialiased;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #6366f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8b5cf6;
+}
+
+/* Smooth transitions for all interactive elements */
+a, button, .btn {
+  transition: all 0.2s ease;
+}
+
+/* LinkedIn icon styling */
+.bi-linkedin {
+  font-size: 1.2rem;
+  transition: color 0.2s ease;
+}
+
+.bi-linkedin:hover {
+  color: #0077b5 !important;
+}
+
+/* Footer styling */
+.page-footer {
+  margin-top: 3rem;
+}
+
