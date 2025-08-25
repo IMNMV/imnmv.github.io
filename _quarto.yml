@@ -1,6 +1,9 @@
+# _quarto.yml  
 project:
   type: website
   output-dir: docs
+  resources:
+    - CNAME
 
 website:
   title: ""
@@ -18,9 +21,8 @@ website:
       - icon: linkedin
         href: https://www.linkedin.com/in/nykko-vitali-0a4826158/
         target: _blank
-  
   page-footer:
-    background: "#000000" 
+    background: "#000000"
     foreground: "#ffffff"
     center: |
       <div style="text-align: center; font-style: italic; margin-top: 1rem;">
@@ -29,7 +31,7 @@ website:
 
 format:
   html:
-    theme: 
+    theme:
       - flatly
       - styles.scss
     css: custom.css
