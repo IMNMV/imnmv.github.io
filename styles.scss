@@ -1,19 +1,12 @@
 /*-- scss:defaults --*/
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap");
 
-// BLACK HEADER, GOLD ANIMATION
 $primary: #228b22;
 $secondary: #ff8c00;
 $dark: #000000;
-$light: #f8fafc;
-$accent: #32cd32;
-
-// Typography
-$font-family-sans-serif: "Inter", system-ui, -apple-system, sans-serif;
 
 /*-- scss:rules --*/
 
-// Animated Logo Styles - GOLD ANIMATION
 .navbar-brand {
   position: relative;
   font-weight: 700;
@@ -66,39 +59,5 @@ $font-family-sans-serif: "Inter", system-ui, -apple-system, sans-serif;
   }
   80% {
     transform: translateY(-5px);
-  }
-}
-
-// Profile image positioning
-.profile-top-left {
-  margin-top: 2rem;
-  margin-left: 2rem;
-}
-
-.profile-image {
-  border-radius: 50%;
-  border: 3px solid #ffd700;
-  transition: transform 0.2s ease;
-}
-
-.profile-image:hover {
-  transform: scale(1.05);
-  border-color: #ff8c00;
-}
-
-// Simple content styling
-body {
-  line-height: 1.6;
-  font-family: "Inter", system-ui, sans-serif;
-}
-
-// Responsive
-@media (max-width: 768px) {
-  .navbar-brand {
-    font-size: 1.2rem;
-  }
-  .profile-top-left {
-    margin-left: 1rem;
-    margin-top: 1rem;
   }
 }

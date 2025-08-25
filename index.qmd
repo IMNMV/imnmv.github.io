@@ -2,6 +2,4 @@
 title: ""
 ---
 
-::: {.profile-top-left}
-![](images/profile.jpg){.profile-image width="150" height="150"}
-:::
+![](images/profile.jpg){width="150" height="150" style="margin-left: 2rem; margin-top: 1rem;"}
