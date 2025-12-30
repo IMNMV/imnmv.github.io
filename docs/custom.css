@@ -123,10 +123,10 @@ a, button, .btn {
   top: 50%;
   right: 5%;
   transform: translateY(-50%);
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 300px;
   z-index: 1;
-  opacity: 0.3;
+  opacity: 0.6;
 }
 
 .brain-animation svg {
@@ -204,41 +204,18 @@ a, button, .btn {
 }
 
 .repo-scroll-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 1.5rem;
-  overflow-x: auto;
   padding: 1rem 0 2rem;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-}
-
-.repo-scroll-container::-webkit-scrollbar {
-  height: 8px;
-}
-
-.repo-scroll-container::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-
-.repo-scroll-container::-webkit-scrollbar-thumb {
-  background: #6366f1;
-  border-radius: 10px;
 }
 
 .repo-card {
-  min-width: 320px;
   background: white;
   border-radius: 15px;
   padding: 2rem;
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: 1px solid #e5e7eb;
-}
-
-.repo-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(99, 102, 241, 0.15);
 }
 
 .repo-card h3 {
@@ -283,7 +260,13 @@ a, button, .btn {
   }
 
   .brain-animation {
-    display: none;
+    display: block;
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    margin: 2rem auto;
+    opacity: 0.5;
   }
 
   .profile-image {
@@ -295,7 +278,7 @@ a, button, .btn {
     font-size: 2rem;
   }
 
-  .repo-card {
-    min-width: 280px;
+  .repo-scroll-container {
+    grid-template-columns: 1fr;
   }
 }
