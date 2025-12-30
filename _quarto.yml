@@ -18,9 +18,21 @@ website:
       - href: cv.qmd
         text: CV
     right:
+      - icon: file-text
+        href: cv.qmd
+        aria-label: CV
+      - icon: twitter-x
+        href: "#"
+        target: _blank
+        aria-label: Twitter
+      - icon: cloud
+        href: "#"
+        target: _blank
+        aria-label: Bluesky
       - icon: linkedin
         href: https://www.linkedin.com/in/nykko-vitali-0a4826158/
         target: _blank
+        aria-label: LinkedIn
   page-footer:
     background: "#000000"
     foreground: "#ffffff"

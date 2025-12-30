@@ -2,4 +2,66 @@
 title: ""
 ---
 
-![](images/profile.jpg){width="150" height="150" style="margin-left: 2rem; margin-top: 1rem;"}
+::: {.hero-section}
+::: {.hero-content}
+::: {.profile-image-container}
+![](images/profile.jpg){.profile-image}
+:::
+
+::: {.bio-section}
+# Your Name Here
+
+PhD Student in [Your Field]
+[Your University]
+
+Your bio goes here. Write a brief introduction about yourself, your research interests, and what you're passionate about. This is your space to tell your story.
+:::
+:::
+
+::: {.brain-animation}
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <path class="brain-path" d="M100,30 C120,30 135,45 135,65 C135,75 130,83 125,88 C135,93 140,103 140,115 C140,130 130,145 115,150 C115,160 108,170 95,170 C82,170 75,160 75,150 C60,145 50,130 50,115 C50,103 55,93 65,88 C60,83 55,75 55,65 C55,45 70,30 90,30 C92,28 96,28 100,30 Z M85,50 C80,52 78,58 80,63 C82,68 88,70 93,68 M107,50 C112,52 114,58 112,63 C110,68 104,70 99,68" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+  <circle class="synapse synapse-1" cx="70" cy="70" r="3"/>
+  <circle class="synapse synapse-2" cx="130" cy="70" r="3"/>
+  <circle class="synapse synapse-3" cx="85" cy="120" r="3"/>
+  <circle class="synapse synapse-4" cx="115" cy="120" r="3"/>
+  <circle class="synapse synapse-5" cx="100" cy="95" r="3"/>
+</svg>
+:::
+:::
+
+## GitHub Repositories
+
+::: {.repos-section}
+::: {.repo-scroll-container}
+::: {.repo-card}
+### Project 1
+A cool project description goes here. Click to explore the repository.
+[View on GitHub →](#){.repo-link}
+:::
+
+::: {.repo-card}
+### Project 2
+Another interesting project. This showcases your work and skills.
+[View on GitHub →](#){.repo-link}
+:::
+
+::: {.repo-card}
+### Project 3
+Your third amazing project with detailed description.
+[View on GitHub →](#){.repo-link}
+:::
+
+::: {.repo-card}
+### Project 4
+More great work to share with the world.
+[View on GitHub →](#){.repo-link}
+:::
+
+::: {.repo-card}
+### Project 5
+Your latest research or development project.
+[View on GitHub →](#){.repo-link}
+:::
+:::
+:::

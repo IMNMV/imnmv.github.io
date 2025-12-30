@@ -5,6 +5,7 @@ body {
   font-smooth: antialiased;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #333;
 }
 
 /* Custom scrollbar */
@@ -30,18 +31,271 @@ a, button, .btn {
   transition: all 0.2s ease;
 }
 
-/* LinkedIn icon styling */
-.bi-linkedin {
+/* Social icon styling */
+.navbar-nav .nav-link i {
   font-size: 1.2rem;
   transition: color 0.2s ease;
 }
 
-.bi-linkedin:hover {
+.navbar-nav .nav-link:hover i.bi-linkedin {
   color: #0077b5 !important;
+}
+
+.navbar-nav .nav-link:hover i.bi-twitter-x {
+  color: #1DA1F2 !important;
+}
+
+.navbar-nav .nav-link:hover i.bi-cloud {
+  color: #0085FF !important;
+}
+
+.navbar-nav .nav-link:hover i.bi-file-text {
+  color: #6366f1 !important;
+}
+
+/* Hero Section */
+.hero-section {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+  border-radius: 0 0 50px 50px;
+  margin-bottom: 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-content {
+  max-width: 900px;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 3rem;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.profile-image-container {
+  text-align: center;
+}
+
+.profile-image {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid white;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+}
+
+.bio-section {
+  padding: 2rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+}
+
+.bio-section h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #1a1a1a;
+}
+
+.bio-section p {
+  font-size: 1.1rem;
+  color: #666;
+  line-height: 1.8;
+  margin-top: 1rem;
+}
+
+/* Brain Animation */
+.brain-animation {
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+  width: 200px;
+  height: 200px;
+  z-index: 1;
+  opacity: 0.3;
+}
+
+.brain-animation svg {
+  width: 100%;
+  height: 100%;
+  color: #6366f1;
+  animation: float 6s ease-in-out infinite;
+}
+
+.brain-path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw 3s ease-in-out forwards, pulse 2s ease-in-out infinite 3s;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(-50%) translateX(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-55%) translateX(10px) rotate(2deg);
+  }
+  50% {
+    transform: translateY(-45%) translateX(0) rotate(-2deg);
+  }
+  75% {
+    transform: translateY(-55%) translateX(-10px) rotate(1deg);
+  }
+}
+
+.synapse {
+  fill: #8b5cf6;
+  animation: blink 2s ease-in-out infinite;
+}
+
+.synapse-1 { animation-delay: 0s; }
+.synapse-2 { animation-delay: 0.4s; }
+.synapse-3 { animation-delay: 0.8s; }
+.synapse-4 { animation-delay: 1.2s; }
+.synapse-5 { animation-delay: 1.6s; }
+
+@keyframes blink {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* GitHub Repositories Section */
+.repos-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.repos-section h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #1a1a1a;
+}
+
+.repo-scroll-container {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding: 1rem 0 2rem;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.repo-scroll-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.repo-scroll-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.repo-scroll-container::-webkit-scrollbar-thumb {
+  background: #6366f1;
+  border-radius: 10px;
+}
+
+.repo-card {
+  min-width: 320px;
+  background: white;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #e5e7eb;
+}
+
+.repo-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(99, 102, 241, 0.15);
+}
+
+.repo-card h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+  margin-top: 0;
+}
+
+.repo-card p {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.repo-link {
+  display: inline-flex;
+  align-items: center;
+  color: #6366f1;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.repo-link:hover {
+  color: #8b5cf6;
+  text-decoration: none;
 }
 
 /* Footer styling */
 .page-footer {
-  margin-top: 3rem;
+  margin-top: 4rem;
 }
 
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .brain-animation {
+    display: none;
+  }
+
+  .profile-image {
+    width: 150px;
+    height: 150px;
+  }
+
+  .bio-section h1 {
+    font-size: 2rem;
+  }
+
+  .repo-card {
+    min-width: 280px;
+  }
+}
