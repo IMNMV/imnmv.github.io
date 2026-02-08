@@ -2,12 +2,43 @@
 title: "Curriculum Vitae"
 ---
 
-## My Professional Journey
+::: {.cv-shell}
+::: {.cv-top}
+For complete details on research, publications, and experience, download the most recent PDF version.
 
-For the most up-to-date and detailed version of my curriculum vitae, please download the PDF version:
-
-::: {.text-center .my-4}
-[📄 Download CV (PDF)](files/VitaliNykko_CV_24AUG2025.pdf){.btn .btn-primary .btn-lg}
+[Download CV (PDF)](files/VitaliNykko_CV_FEB2026.pdf){.btn .btn-primary .btn-lg}
 :::
 
-If you have any questions about my background or would like to discuss potential opportunities, please don't hesitate to reach out via [LinkedIn](https://www.linkedin.com/in/nykko-vitali-0a4826158/).
+::: {.cv-grid}
+::: {.cv-card}
+### Current Position
+PhD Student in Psychology, Harvard University (2024-Present)
+:::
+
+::: {.cv-card}
+### Previous Roles
+UX Research Assistant (Exponent) and Clinical Research Coordinator (UPenn)
+:::
+
+::: {.cv-card}
+### Research Areas
+Computational social science, NLP, cognitive immunity, and metacognition
+:::
+:::
+
+## Selected Publication
+
+::: {.publication-card}
+**Lehr, S. A., Saichandran, K. S., Harmon-Jones, E., Vitali, N., & Banaji, M. R. (2025).**  
+*Kernels of selfhood: GPT-4o shows humanlike patterns of cognitive dissonance moderated by free choice.*  
+*Proceedings of the National Academy of Sciences*, 122(20), e2501823122.  
+[Read the paper](https://www.pnas.org/doi/10.1073/pnas.2501823122){target="_blank"}
+:::
+
+## Contact
+
+For collaborations or inquiries:
+
+- [LinkedIn](https://www.linkedin.com/in/nykko-vitali-0a4826158/)
+- [Email](mailto:nykvt@icloud.com)
+:::

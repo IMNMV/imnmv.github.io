@@ -2,66 +2,119 @@
 title: ""
 ---
 
-::: {.hero-section}
-::: {.hero-content}
-::: {.profile-image-container}
+::: {.homepage-shell}
+::: {.hero-card}
+::: {.hero-grid}
+::: {.hero-copy}
+<span class="hero-kicker">Harvard University · Psychology PhD</span>
+
+::: {.name-row}
+# Nykko Vitali
+
+::: {.brain-orb aria-hidden="true"}
+<model-viewer
+  src="files/pinkbrain.glb"
+  alt="3D brain model"
+  auto-rotate
+  rotation-per-second="14deg"
+  camera-orbit="20deg 75deg 150%"
+  min-camera-orbit="auto auto 150%"
+  max-camera-orbit="auto auto 150%"
+  field-of-view="22deg"
+  min-field-of-view="22deg"
+  max-field-of-view="22deg"
+  exposure="0.9"
+  shadow-intensity="0"
+  interaction-prompt="none"
+  loading="eager"
+>
+</model-viewer>
+<span class="brain-tooltip">That's me!</span>
+:::
+:::
+
+Computational social scientist studying how people metacognitively evaluate information, intentions, and intelligence in digital environments.
+
+I am a second-year PhD student in Psychology at Harvard University. My work combines behavioral experiments, natural language processing, and computational modeling to study social cognition, cognitive immunity, and human-AI interaction.
+
+::: {.hero-actions}
+[View CV](cv.qmd){.btn .btn-outline-primary .btn-lg}
+[GitHub](https://github.com/IMNMV){.btn .btn-outline-primary .btn-lg target="_blank"}
+:::
+:::
+
+::: {.hero-panel}
 ![](images/profile.jpg){.profile-image}
+
+::: {.panel-note}
+**Current Focus**
+
+Human-AI interaction and belief updating during uncertainty & Reasoning inconsistencies in LLMs
 :::
-
-::: {.bio-section}
-# Your Name Here
-
-PhD Student in [Your Field]
-[Your University]
-
-Your bio goes here. Write a brief introduction about yourself, your research interests, and what you're passionate about. This is your space to tell your story.
+:::
 :::
 :::
 
-::: {.brain-animation}
-<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-  <path class="brain-path" d="M100,30 C120,30 135,45 135,65 C135,75 130,83 125,88 C135,93 140,103 140,115 C140,130 130,145 115,150 C115,160 108,170 95,170 C82,170 75,160 75,150 C60,145 50,130 50,115 C50,103 55,93 65,88 C60,83 55,75 55,65 C55,45 70,30 90,30 C92,28 96,28 100,30 Z M85,50 C80,52 78,58 80,63 C82,68 88,70 93,68 M107,50 C112,52 114,58 112,63 C110,68 104,70 99,68" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-  <circle class="synapse synapse-1" cx="70" cy="70" r="3"/>
-  <circle class="synapse synapse-2" cx="130" cy="70" r="3"/>
-  <circle class="synapse synapse-3" cx="85" cy="120" r="3"/>
-  <circle class="synapse synapse-4" cx="115" cy="120" r="3"/>
-  <circle class="synapse synapse-5" cx="100" cy="95" r="3"/>
-</svg>
+## Selected Work {.section-title}
+
+::: {.project-grid}
+::: {.project-card}
+### ClaudeR
+R MCP integration for interactive, agent-assisted coding in RStudio.
+[View repository](https://github.com/IMNMV/ClaudeR){.project-link target="_blank"}
+:::
+
+::: {.project-card}
+### interaction-study
+Web experiment infrastructure for studying perceived humanness in conversational settings.
+[View repository](https://github.com/IMNMV/interaction-study){.project-link target="_blank"}
+:::
+
+::: {.project-card}
+### ai-turing-test
+Behavioral experiment platform for human-AI conversational judgment and Turing-style evaluation.
+[View repository](https://github.com/IMNMV/ai-turing-test){.project-link target="_blank"}
+:::
+
+::: {.project-card}
+### grokipediavswikipedia
+A comparative project exploring information quality and narrative framing across model-generated and encyclopedia-style content.
+[View repository](https://github.com/IMNMV/wikipediavsgrokipedia){.project-link target="_blank"}
 :::
 :::
 
-## GitHub Repositories
+## Publication Spotlight {.section-title}
 
-::: {.repos-section}
-::: {.repo-scroll-container}
-::: {.repo-card}
-### Project 1
-A cool project description goes here. Click to explore the repository.
-[View on GitHub →](#){.repo-link}
+::: {.publication-card}
+**Lehr, S. A., Saichandran, K. S., Harmon-Jones, E., Vitali, N., & Banaji, M. R. (2025).**  
+*Kernels of selfhood: GPT-4o shows humanlike patterns of cognitive dissonance moderated by free choice.*  
+*Proceedings of the National Academy of Sciences*, 122(20), e2501823122.  
+[Read the paper](https://www.pnas.org/doi/10.1073/pnas.2501823122){target="_blank"}
 :::
 
-::: {.repo-card}
-### Project 2
-Another interesting project. This showcases your work and skills.
-[View on GitHub →](#){.repo-link}
+## Methods & Tools {.section-title}
+
+::: {.chip-row}
+<span class="tool-chip">R</span>
+<span class="tool-chip">Python</span>
+<span class="tool-chip">MCP</span>
+<span class="tool-chip">Swift</span>
+<span class="tool-chip">JavaScript</span>
+<span class="tool-chip">Quarto</span>
+<span class="tool-chip">NLP</span>
+<span class="tool-chip">LLMs</span>
+<span class="tool-chip">Behavioral Experiments</span>
+<span class="tool-chip">PostgreSQL</span>
+<span class="tool-chip">MongoDB</span>
 :::
 
-::: {.repo-card}
-### Project 3
-Your third amazing project with detailed description.
-[View on GitHub →](#){.repo-link}
-:::
+## Contact {.section-title}
 
-::: {.repo-card}
-### Project 4
-More great work to share with the world.
-[View on GitHub →](#){.repo-link}
-:::
+::: {.contact-card}
+I am open to collaborations in computational social science, language-model evaluation, and behavioral research design.
 
-::: {.repo-card}
-### Project 5
-Your latest research or development project.
-[View on GitHub →](#){.repo-link}
-:::
+- [LinkedIn](https://www.linkedin.com/in/nykko-vitali-0a4826158/)
+- [GitHub](https://github.com/IMNMV)
+- [Email](mailto:nykvt@icloud.com)
 :::
 :::

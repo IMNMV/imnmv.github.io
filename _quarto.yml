@@ -4,50 +4,49 @@ project:
   output-dir: docs
   resources:
     - CNAME
+    - files/pinkbrain.glb
 
 website:
-  title: ""
-  description: ""
+  title: "Nykko Vitali"
+  description: "Computational social science, NLP, and human-AI interaction research."
   navbar:
-    background: "#000000"
-    foreground: "#ffffff"
-    title: "<span class=\"logo-text\">I AM NV</span>"
+    background: "#1e2a23"
+    foreground: "#f4f8f2"
+    title: "<span class=\"logo-text\">Nykko Vitali</span>"
     left:
       - href: index.qmd
         text: Home
       - href: cv.qmd
         text: CV
     right:
-      - icon: file-text
-        href: cv.qmd
-        aria-label: CV
-      - icon: twitter-x
-        href: "#"
+      - icon: github
+        href: https://github.com/IMNMV
         target: _blank
-        aria-label: Twitter
-      - icon: cloud
-        href: "#"
-        target: _blank
-        aria-label: Bluesky
+        aria-label: GitHub
       - icon: linkedin
         href: https://www.linkedin.com/in/nykko-vitali-0a4826158/
         target: _blank
         aria-label: LinkedIn
+      - icon: envelope
+        href: mailto:nykvt@icloud.com
+        aria-label: Email
   page-footer:
-    background: "#000000"
-    foreground: "#ffffff"
+    background: "#1e2a23"
+    foreground: "#cfdbd1"
     center: |
-      <div style="text-align: center; font-style: italic; margin-top: 1rem;">
-        "Anything you know about cannot be you." - Alfred Korzybski
+      <div style="text-align: center; letter-spacing: 0.02em; margin-top: 0.6rem;">
+        © 2026 Nykko Vitali · Computational Social Science
       </div>
 
 format:
   html:
     theme:
-      - flatly
+      - litera
       - styles.scss
     css: custom.css
+    include-in-header:
+      - includes/model-viewer.html
     toc: false
     smooth-scroll: true
     anchor-sections: true
-    page-layout: article
+    page-layout: full

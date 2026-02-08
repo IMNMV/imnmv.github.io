@@ -4,13 +4,62 @@
     "href": "cv.html",
     "title": "Curriculum Vitae",
     "section": "",
-    "text": "For the most up-to-date and detailed version of my curriculum vitae, please download the PDF version:\n\n📄 Download CV (PDF)\n\nIf you have any questions about my background or would like to discuss potential opportunities, please don’t hesitate to reach out via LinkedIn."
+    "text": "For complete details on research, publications, and experience, download the most recent PDF version.\nDownload CV (PDF)\n\n\n\n\nPhD Student in Psychology, Harvard University (2024-Present)\n\n\n\nUX Research Assistant (Exponent) and Clinical Research Coordinator (UPenn)\n\n\n\nComputational social science, NLP, cognitive immunity, and metacognition\n\n\n\n\n\nLehr, S. A., Saichandran, K. S., Harmon-Jones, E., Vitali, N., & Banaji, M. R. (2025).\nKernels of selfhood: GPT-4o shows humanlike patterns of cognitive dissonance moderated by free choice.\nProceedings of the National Academy of Sciences, 122(20), e2501823122.\nRead the paper\n\n\n\n\nFor collaborations or inquiries:\n\nLinkedIn\nEmail"
   },
   {
-    "objectID": "cv.html#my-professional-journey",
-    "href": "cv.html#my-professional-journey",
+    "objectID": "cv.html#selected-publication",
+    "href": "cv.html#selected-publication",
     "title": "Curriculum Vitae",
     "section": "",
-    "text": "For the most up-to-date and detailed version of my curriculum vitae, please download the PDF version:\n\n📄 Download CV (PDF)\n\nIf you have any questions about my background or would like to discuss potential opportunities, please don’t hesitate to reach out via LinkedIn."
+    "text": "Lehr, S. A., Saichandran, K. S., Harmon-Jones, E., Vitali, N., & Banaji, M. R. (2025).\nKernels of selfhood: GPT-4o shows humanlike patterns of cognitive dissonance moderated by free choice.\nProceedings of the National Academy of Sciences, 122(20), e2501823122.\nRead the paper"
+  },
+  {
+    "objectID": "cv.html#contact",
+    "href": "cv.html#contact",
+    "title": "Curriculum Vitae",
+    "section": "",
+    "text": "For collaborations or inquiries:\n\nLinkedIn\nEmail"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Nykko Vitali",
+    "section": "",
+    "text": "Harvard University · Psychology PhD\n\n\n\n  That’s me!\n\n\nComputational social scientist studying how people metacognitively evaluate information, intentions, and intelligence in digital environments.\nI am a second-year PhD student in Psychology at Harvard University. My work combines behavioral experiments, natural language processing, and computational modeling to study social cognition, cognitive immunity, and human-AI interaction.\n\nView CV GitHub\n\n\n\n\n\nCurrent Focus\nHuman-AI interaction and belief updating during uncertainty & Reasoning inconsistencies in LLMs\n\n\n\n\n\n\n\n\n\nR MCP integration for interactive, agent-assisted coding in RStudio. View repository\n\n\n\nWeb experiment infrastructure for studying perceived humanness in conversational settings. View repository\n\n\n\nBehavioral experiment platform for human-AI conversational judgment and Turing-style evaluation. View repository\n\n\n\nA comparative project exploring information quality and narrative framing across model-generated and encyclopedia-style content. View repository\n\n\n\n\n\n\nLehr, S. A., Saichandran, K. S., Harmon-Jones, E., Vitali, N., & Banaji, M. R. (2025).\nKernels of selfhood: GPT-4o shows humanlike patterns of cognitive dissonance moderated by free choice.\nProceedings of the National Academy of Sciences, 122(20), e2501823122.\nRead the paper\n\n\n\n\n\nR Python MCP Swift JavaScript Quarto NLP LLMs Behavioral Experiments PostgreSQL MongoDB\n\n\n\n\n\nI am open to collaborations in computational social science, language-model evaluation, and behavioral research design.\n\nLinkedIn\nGitHub\nEmail"
+  },
+  {
+    "objectID": "index.html#selected-work",
+    "href": "index.html#selected-work",
+    "title": "Nykko Vitali",
+    "section": "",
+    "text": "R MCP integration for interactive, agent-assisted coding in RStudio. View repository\n\n\n\nWeb experiment infrastructure for studying perceived humanness in conversational settings. View repository\n\n\n\nBehavioral experiment platform for human-AI conversational judgment and Turing-style evaluation. View repository\n\n\n\nA comparative project exploring information quality and narrative framing across model-generated and encyclopedia-style content. View repository"
+  },
+  {
+    "objectID": "index.html#publication-spotlight",
+    "href": "index.html#publication-spotlight",
+    "title": "Nykko Vitali",
+    "section": "",
+    "text": "Lehr, S. A., Saichandran, K. S., Harmon-Jones, E., Vitali, N., & Banaji, M. R. (2025).\nKernels of selfhood: GPT-4o shows humanlike patterns of cognitive dissonance moderated by free choice.\nProceedings of the National Academy of Sciences, 122(20), e2501823122.\nRead the paper"
+  },
+  {
+    "objectID": "index.html#methods-tools",
+    "href": "index.html#methods-tools",
+    "title": "Nykko Vitali",
+    "section": "",
+    "text": "R Python MCP Swift JavaScript Quarto NLP LLMs Behavioral Experiments PostgreSQL MongoDB"
+  },
+  {
+    "objectID": "index.html#contact",
+    "href": "index.html#contact",
+    "title": "Nykko Vitali",
+    "section": "",
+    "text": "I am open to collaborations in computational social science, language-model evaluation, and behavioral research design.\n\nLinkedIn\nGitHub\nEmail"
+  },
+  {
+    "objectID": "cv.html#curriculum-vitae",
+    "href": "cv.html#curriculum-vitae",
+    "title": "Curriculum Vitae",
+    "section": "",
+    "text": "For complete details on research, publications, and experience, download the most recent PDF version.\nDownload CV (PDF)"
   }
 ]
