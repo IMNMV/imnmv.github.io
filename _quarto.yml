@@ -35,7 +35,7 @@ website:
     foreground: "#cfdbd1"
     center: |
       <div style="text-align: center; letter-spacing: 0.02em; margin-top: 0.6rem;">
-        © 2026 Nykko Vitali · Computational Social Science
+        © 2026 Nykko Vitali
       </div>
 
 format:

@@ -136,6 +136,34 @@ a:hover {
   animation: rise-in 0.5s ease both;
 }
 
+.cv-inline-shell {
+  animation: rise-in 0.5s ease both;
+}
+
+.cv-inline-toolbar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.cv-inline-frame {
+  display: block;
+  width: 100%;
+  height: min(88vh, 1320px);
+  border: 1px solid var(--line);
+  background: #ffffff;
+}
+
+.cv-inline-fallback {
+  margin-top: 0.65rem;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.cv-inline-fallback a {
+  font-weight: 700;
+}
+
 .section-title {
   margin-top: 3rem;
   margin-bottom: 1.1rem;
@@ -214,6 +242,30 @@ a:hover {
   .profile-image {
     border-radius: 0 !important;
     --cut-size: var(--cut-md);
+    -webkit-clip-path: polygon(
+      var(--cut-size) 0,
+      calc(100% - var(--cut-size)) 0,
+      100% var(--cut-size),
+      100% calc(100% - var(--cut-size)),
+      calc(100% - var(--cut-size)) 100%,
+      var(--cut-size) 100%,
+      0 calc(100% - var(--cut-size)),
+      0 var(--cut-size)
+    );
+    clip-path: polygon(
+      var(--cut-size) 0,
+      calc(100% - var(--cut-size)) 0,
+      100% var(--cut-size),
+      100% calc(100% - var(--cut-size)),
+      calc(100% - var(--cut-size)) 100%,
+      var(--cut-size) 100%,
+      0 calc(100% - var(--cut-size)),
+      0 var(--cut-size)
+    );
+  }
+
+  .cv-inline-frame {
+    --cut-size: var(--cut-lg);
     -webkit-clip-path: polygon(
       var(--cut-size) 0,
       calc(100% - var(--cut-size)) 0,
@@ -672,5 +724,13 @@ a:hover {
 
   .section-title {
     margin-top: 2.3rem;
+  }
+
+  .cv-inline-toolbar {
+    justify-content: flex-start;
+  }
+
+  .cv-inline-frame {
+    height: 82vh;
   }
 }

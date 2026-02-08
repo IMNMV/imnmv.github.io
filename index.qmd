@@ -91,30 +91,4 @@ A comparative project exploring information quality and narrative framing across
 *Proceedings of the National Academy of Sciences*, 122(20), e2501823122.  
 [Read the paper](https://www.pnas.org/doi/10.1073/pnas.2501823122){target="_blank"}
 :::
-
-## Methods & Tools {.section-title}
-
-::: {.chip-row}
-<span class="tool-chip">R</span>
-<span class="tool-chip">Python</span>
-<span class="tool-chip">MCP</span>
-<span class="tool-chip">Swift</span>
-<span class="tool-chip">JavaScript</span>
-<span class="tool-chip">Quarto</span>
-<span class="tool-chip">NLP</span>
-<span class="tool-chip">LLMs</span>
-<span class="tool-chip">Behavioral Experiments</span>
-<span class="tool-chip">PostgreSQL</span>
-<span class="tool-chip">MongoDB</span>
-:::
-
-## Contact {.section-title}
-
-::: {.contact-card}
-I am open to collaborations in computational social science, language-model evaluation, and behavioral research design.
-
-- [LinkedIn](https://www.linkedin.com/in/nykko-vitali-0a4826158/)
-- [GitHub](https://github.com/IMNMV)
-- [Email](mailto:nykvt@icloud.com)
-:::
 :::
