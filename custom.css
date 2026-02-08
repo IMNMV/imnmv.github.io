@@ -279,6 +279,8 @@ a:hover {
   width: 126%;
   height: 126%;
   --poster-color: transparent;
+  --progress-bar-height: 0px;
+  --progress-mask: none;
   background: transparent !important;
   border-radius: 0;
   filter: saturate(0.95) contrast(1.05) drop-shadow(0 8px 12px rgba(49, 73, 60, 0.22));
