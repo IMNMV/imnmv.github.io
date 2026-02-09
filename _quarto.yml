@@ -5,6 +5,7 @@ project:
   resources:
     - CNAME
     - files/pinkbrain.glb
+    - images/bluesky.svg
 
 website:
   title: "Nykko Vitali"
@@ -27,6 +28,14 @@ website:
         href: https://github.com/IMNMV
         target: _blank
         aria-label: GitHub
+      - icon: twitter
+        href: https://x.com/home
+        target: _blank
+        aria-label: Twitter
+      - icon: bluesky
+        href: https://bsky.app/profile/philasophy.bsky.social
+        target: _blank
+        aria-label: Bluesky
       - icon: linkedin
         href: https://www.linkedin.com/in/nykko-vitali-0a4826158/
         target: _blank

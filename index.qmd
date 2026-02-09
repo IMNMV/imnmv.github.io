@@ -33,14 +33,10 @@ title: ""
 :::
 :::
 
-Computational social scientist studying how people metacognitively evaluate information, intentions, and intelligence in digital environments.
+I am a second-year PhD student in Psychology at Harvard University.
 
-I am a second-year PhD student in Psychology at Harvard University. My work combines behavioral experiments, natural language processing, and computational modeling to study social cognition, cognitive immunity, and human-AI interaction.
+My work is bi-directional. On one end, I combine behavioral experiments and computational modeling to study how people metacognitively evaluate information, intentions, and intelligence in digital environments. On the other, I am quite interested in exploring what aspects of human cognition have seeped into the weights of AI, especially LLMs, and how aligned they are with human behaviors.
 
-::: {.hero-actions}
-[View CV](cv.qmd){.btn .btn-outline-primary .btn-lg}
-[GitHub](https://github.com/IMNMV){.btn .btn-outline-primary .btn-lg target="_blank"}
-:::
 :::
 
 ::: {.hero-panel}
@@ -65,19 +61,7 @@ R MCP integration for interactive, agent-assisted coding in RStudio.
 :::
 
 ::: {.project-card}
-### interaction-study
-Web experiment infrastructure for studying perceived humanness in conversational settings.
-[View repository](https://github.com/IMNMV/interaction-study){.project-link target="_blank"}
-:::
-
-::: {.project-card}
-### ai-turing-test
-Behavioral experiment platform for human-AI conversational judgment and Turing-style evaluation.
-[View repository](https://github.com/IMNMV/ai-turing-test){.project-link target="_blank"}
-:::
-
-::: {.project-card}
-### grokipediavswikipedia
+### A Quantitative Comaprison of Wikipedia vs. Grokipedia
 A comparative project exploring information quality and narrative framing across model-generated and encyclopedia-style content.
 [View repository](https://github.com/IMNMV/wikipediavsgrokipedia){.project-link target="_blank"}
 :::
