@@ -19,6 +19,10 @@ website:
       - href: cv.qmd
         text: CV
     right:
+      - icon: mortarboard
+        href: https://scholar.google.com/citations?user=z493MFoAAAAJ&hl=en
+        target: _blank
+        aria-label: Google Scholar
       - icon: github
         href: https://github.com/IMNMV
         target: _blank
