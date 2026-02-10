@@ -152,17 +152,21 @@ ul.task-list li input[type="checkbox"] {
 <div class="hero-card">
 <div class="hero-grid">
 <div class="hero-copy">
-<p><span class="hero-kicker">Harvard University · Psychology PhD</span></p>
-<section id="nykko-vitali" class="level1 name-row">
+<p><span class="hero-kicker intro-item intro-delay-1">Harvard University · Psychology PhD</span></p>
+<section id="nykko-vitali" class="level1 name-row intro-item intro-delay-2">
 <h1>Nykko Vitali</h1>
 <div class="brain-orb" aria-hidden="true">
-<p><model-viewer src="files/pinkbrain.glb" alt="3D brain model" auto-rotate="" rotation-per-second="14deg" camera-orbit="20deg 75deg 150%" min-camera-orbit="auto auto 150%" max-camera-orbit="auto auto 150%" field-of-view="22deg" min-field-of-view="22deg" max-field-of-view="22deg" exposure="0.9" shadow-intensity="0" interaction-prompt="none" loading="eager"> </model-viewer> <span class="brain-tooltip">That’s me!</span></p>
+<p><model-viewer src="files/pinkbrain.glb" alt="3D brain model" auto-rotate="" rotation-per-second="9deg" camera-orbit="20deg 75deg 150%" min-camera-orbit="auto auto 150%" max-camera-orbit="auto auto 150%" field-of-view="22deg" min-field-of-view="22deg" max-field-of-view="22deg" exposure="0.9" shadow-intensity="0" interaction-prompt="none" loading="eager"> </model-viewer> <span class="brain-tooltip">That’s me!</span></p>
 </div>
 </section>
+<div class="hero-bio intro-item intro-delay-3">
 <p>I am a second-year PhD student in Psychology at Harvard University.</p>
+</div>
+<div class="hero-bio intro-item intro-delay-4">
 <p>My work is bi-directional. On one end, I combine behavioral experiments and computational modeling to study how people metacognitively evaluate information, intentions, and intelligence in digital environments. On the other, I am quite interested in exploring what aspects of human cognition have seeped into the weights of AI, especially LLMs, and how aligned they are with human behaviors.</p>
 </div>
-<div class="hero-panel">
+</div>
+<div class="hero-panel intro-item intro-delay-5">
 <p><img src="images/profile.jpg" class="profile-image img-fluid"></p>
 <div class="panel-note">
 <p><strong>Current Focus</strong></p>
@@ -194,6 +198,42 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </section>
 </div>
+<script>
+(() => {
+  const initMotion = () => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const brainOrb = document.querySelector(".brain-orb");
+    if (!brainOrb || prefersReducedMotion) {
+      return;
+    }
+
+    const maxTilt = 6;
+
+    brainOrb.addEventListener("pointermove", (event) => {
+      const rect = brainOrb.getBoundingClientRect();
+      const px = (event.clientX - rect.left) / rect.width;
+      const py = (event.clientY - rect.top) / rect.height;
+      const tiltY = (px - 0.5) * (maxTilt * 2);
+      const tiltX = (0.5 - py) * (maxTilt * 2);
+
+      brainOrb.style.setProperty("--brain-tilt-x", `${tiltX.toFixed(2)}deg`);
+      brainOrb.style.setProperty("--brain-tilt-y", `${tiltY.toFixed(2)}deg`);
+    });
+
+    brainOrb.addEventListener("pointerleave", () => {
+      brainOrb.style.setProperty("--brain-tilt-x", "0deg");
+      brainOrb.style.setProperty("--brain-tilt-y", "0deg");
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initMotion, { once: true });
+  } else {
+    initMotion();
+  }
+})();
+</script>
 
 
 

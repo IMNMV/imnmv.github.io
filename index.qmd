@@ -6,9 +6,9 @@ title: ""
 ::: {.hero-card}
 ::: {.hero-grid}
 ::: {.hero-copy}
-<span class="hero-kicker">Harvard University · Psychology PhD</span>
+<span class="hero-kicker intro-item intro-delay-1">Harvard University · Psychology PhD</span>
 
-::: {.name-row}
+::: {.name-row .intro-item .intro-delay-2}
 # Nykko Vitali
 
 ::: {.brain-orb aria-hidden="true"}
@@ -16,7 +16,7 @@ title: ""
   src="files/pinkbrain.glb"
   alt="3D brain model"
   auto-rotate
-  rotation-per-second="14deg"
+  rotation-per-second="9deg"
   camera-orbit="20deg 75deg 150%"
   min-camera-orbit="auto auto 150%"
   max-camera-orbit="auto auto 150%"
@@ -33,13 +33,17 @@ title: ""
 :::
 :::
 
+::: {.hero-bio .intro-item .intro-delay-3}
 I am a second-year PhD student in Psychology at Harvard University.
+:::
 
+::: {.hero-bio .intro-item .intro-delay-4}
 My work is bi-directional. On one end, I combine behavioral experiments and computational modeling to study how people metacognitively evaluate information, intentions, and intelligence in digital environments. On the other, I am quite interested in exploring what aspects of human cognition have seeped into the weights of AI, especially LLMs, and how aligned they are with human behaviors.
+:::
 
 :::
 
-::: {.hero-panel}
+::: {.hero-panel .intro-item .intro-delay-5}
 ![](images/profile.jpg){.profile-image}
 
 ::: {.panel-note}
@@ -76,3 +80,42 @@ A comparative project exploring information quality and narrative framing across
 [Read the paper](https://www.pnas.org/doi/10.1073/pnas.2501823122){target="_blank"}
 :::
 :::
+
+```{=html}
+<script>
+(() => {
+  const initMotion = () => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const brainOrb = document.querySelector(".brain-orb");
+    if (!brainOrb || prefersReducedMotion) {
+      return;
+    }
+
+    const maxTilt = 6;
+
+    brainOrb.addEventListener("pointermove", (event) => {
+      const rect = brainOrb.getBoundingClientRect();
+      const px = (event.clientX - rect.left) / rect.width;
+      const py = (event.clientY - rect.top) / rect.height;
+      const tiltY = (px - 0.5) * (maxTilt * 2);
+      const tiltX = (0.5 - py) * (maxTilt * 2);
+
+      brainOrb.style.setProperty("--brain-tilt-x", `${tiltX.toFixed(2)}deg`);
+      brainOrb.style.setProperty("--brain-tilt-y", `${tiltY.toFixed(2)}deg`);
+    });
+
+    brainOrb.addEventListener("pointerleave", () => {
+      brainOrb.style.setProperty("--brain-tilt-x", "0deg");
+      brainOrb.style.setProperty("--brain-tilt-y", "0deg");
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initMotion, { once: true });
+  } else {
+    initMotion();
+  }
+})();
+</script>
+```
