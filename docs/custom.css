@@ -43,6 +43,33 @@ a:hover {
   color: var(--accent-strong);
 }
 
+/* Harden navbar icons against font fallback/rendering issues */
+@font-face {
+  font-family: "nv-bootstrap-icons";
+  src: url("site_libs/bootstrap/bootstrap-icons.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.navbar i.bi::before {
+  font-family: "nv-bootstrap-icons" !important;
+  font-style: normal;
+  font-weight: normal !important;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  display: inline-block;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.navbar .bi-mortarboard::before { content: "\f6fe"; }
+.navbar .bi-github::before { content: "\f3ed"; }
+.navbar .bi-twitter::before { content: "\f5ef"; }
+.navbar .bi-linkedin::before { content: "\f472"; }
+.navbar .bi-envelope::before { content: "\f32f"; }
+
 .navbar .bi-bluesky::before {
   content: "";
   display: inline-block;
