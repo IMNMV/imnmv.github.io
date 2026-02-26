@@ -2,6 +2,12 @@
 title: ""
 ---
 
+```{=html}
+<script>
+document.documentElement.classList.add("js-typing");
+</script>
+```
+
 ::: {.homepage-shell}
 ::: {.hero-card}
 ::: {.hero-grid}
@@ -33,12 +39,12 @@ title: ""
 :::
 :::
 
-::: {.hero-bio .intro-item .intro-delay-3}
-I am a second-year PhD student in Psychology at Harvard University.
+::: {.hero-bio}
+<p class="type-reveal" data-type-speed="24">I am a second-year PhD student in Psychology at Harvard University.</p>
 :::
 
-::: {.hero-bio .intro-item .intro-delay-4}
-My work is bi-directional. On one end, I combine behavioral experiments and computational modeling to study how people metacognitively evaluate information, intentions, and intelligence in digital environments. On the other, I am quite interested in exploring what aspects of human cognition have seeped into the weights of AI, especially LLMs, and how aligned they are with human behaviors.
+::: {.hero-bio}
+<p class="type-reveal" data-type-speed="24">My work is bi-directional. On one end, I combine behavioral experiments and computational modeling to study how people metacognitively evaluate information, intentions, and intelligence in digital environments. On the other, I am quite interested in exploring what aspects of human cognition have seeped into the weights of AI, especially LLMs, and how aligned they are with human behaviors.</p>
 :::
 
 :::
@@ -86,6 +92,63 @@ A comparative project exploring information quality and narrative framing across
 (() => {
   const initMotion = () => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const revealLines = document.querySelectorAll(".type-reveal");
+    const animateTypedLine = (el, done) => {
+      const fullText = el.dataset.fullText || el.textContent.trim();
+      const baseSpeed = Number(el.dataset.typeSpeed || 14);
+
+      el.dataset.fullText = fullText;
+      el.textContent = "";
+
+      let i = 0;
+      el.classList.add("typewriter-active");
+
+      const tick = () => {
+        if (i >= fullText.length) {
+          el.classList.remove("typewriter-active");
+          el.classList.add("typewriter-done");
+          done();
+          return;
+        }
+
+        i += 1;
+        el.textContent = fullText.slice(0, i);
+        const ch = fullText[i - 1];
+        const extraPause = /[.,;:!?]/.test(ch) ? baseSpeed * 4 : 0;
+        window.setTimeout(tick, baseSpeed + extraPause);
+      };
+
+      tick();
+    };
+
+    if (revealLines.length > 0) {
+      if (prefersReducedMotion) {
+        revealLines.forEach((line) => {
+          const fullText = line.dataset.fullText || line.textContent.trim();
+          line.dataset.fullText = fullText;
+          line.textContent = fullText;
+          line.classList.remove("typewriter-active");
+          line.classList.add("typewriter-done");
+        });
+      } else {
+        revealLines.forEach((line) => {
+          const fullText = line.dataset.fullText || line.textContent.trim();
+          line.dataset.fullText = fullText;
+          line.textContent = "";
+        });
+
+        let idx = 0;
+        const runNext = () => {
+          if (idx >= revealLines.length) return;
+          animateTypedLine(revealLines[idx], () => {
+            idx += 1;
+            window.setTimeout(runNext, 220);
+          });
+        };
+        window.setTimeout(runNext, 420);
+      }
+    }
 
     const brainOrb = document.querySelector(".brain-orb");
     if (!brainOrb || prefersReducedMotion) {
