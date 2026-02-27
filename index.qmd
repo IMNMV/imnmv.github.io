@@ -44,7 +44,15 @@ document.documentElement.classList.add("js-typing");
 :::
 
 ::: {.hero-bio}
+<p class="type-reveal" data-type-speed="24">I work primarily with</p>
+:::
+
+::: {.hero-bio}
 <p class="type-reveal" data-type-speed="24">My work is bi-directional. On one end, I combine behavioral experiments and computational modeling to study how people metacognitively evaluate information, intentions, and intelligence in digital environments. On the other, I am quite interested in exploring what aspects of human cognition have seeped into the weights of AI, especially LLMs, and how aligned they are with human behaviors.</p>
+:::
+
+::: {.hero-bio}
+<p class="type-reveal" data-type-speed="24">I also love stand-up comedy, building tools for various applications, and the manga One Piece :)</p>
 :::
 
 :::
