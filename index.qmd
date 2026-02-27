@@ -1,5 +1,8 @@
 ---
 title: ""
+format:
+  html:
+    title-block-style: none
 ---
 
 ```{=html}
@@ -13,7 +16,7 @@ document.documentElement.classList.add("js-typing");
 ::: {.hero-grid}
 ::: {.hero-copy}
 ::: {.name-row .intro-item .intro-delay-2}
-# Nykko Vitali
+## Nykko Vitali
 
 ::: {.brain-orb aria-hidden="true"}
 <model-viewer

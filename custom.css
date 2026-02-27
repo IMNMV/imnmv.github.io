@@ -458,7 +458,8 @@ a:hover {
   max-width: 100%;
 }
 
-.name-row h1 {
+.name-row h1,
+.name-row h2 {
   margin: 0;
   background-image: linear-gradient(
     120deg,
@@ -496,7 +497,8 @@ a:hover {
   text-transform: uppercase;
 }
 
-.hero-copy h1 {
+.hero-copy h1,
+.hero-copy h2 {
   font-size: clamp(2.05rem, 4.5vw, 3.35rem);
   margin-bottom: 0.65rem;
 }
@@ -692,6 +694,18 @@ h2.section-title .anchorjs-link {
   display: none !important;
 }
 
+.name-row h2.anchored {
+  padding-right: 0 !important;
+}
+
+.name-row h2 .anchorjs-link {
+  display: none !important;
+}
+
+#title-block-header.quarto-title-block:empty {
+  display: none !important;
+}
+
 .focus-card p,
 .project-card p,
 .cv-card p {
@@ -850,7 +864,8 @@ h2.section-title .anchorjs-link {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .name-row h1 {
+  .name-row h1,
+  .name-row h2 {
     animation: none;
   }
 
