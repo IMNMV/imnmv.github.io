@@ -69,6 +69,159 @@ ul.task-list li input[type="checkbox"] {
 <style>html{ scroll-behavior: smooth; }</style>
 <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer.min.js" onerror="this.onerror=null;this.src='https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js';"></script>
 <script nomodule="" src="https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer-legacy.js"></script>
+<script>
+(() => {
+  const cursorSets = {
+    idle: [
+      "images/cursor/frames/robot-idle-01.png",
+      "images/cursor/frames/robot-idle-02.png",
+      "images/cursor/frames/robot-idle-03.png",
+      "images/cursor/frames/robot-idle-04.png",
+      "images/cursor/frames/robot-idle-05.png",
+      "images/cursor/frames/robot-idle-06.png",
+      "images/cursor/frames/robot-idle-07.png",
+      "images/cursor/frames/robot-idle-08.png",
+      "images/cursor/frames/robot-idle-09.png",
+      "images/cursor/frames/robot-idle-10.png"
+    ],
+    run: [
+      "images/cursor/frames/robot-run-01.png",
+      "images/cursor/frames/robot-run-02.png",
+      "images/cursor/frames/robot-run-03.png",
+      "images/cursor/frames/robot-run-04.png",
+      "images/cursor/frames/robot-run-05.png",
+      "images/cursor/frames/robot-run-06.png",
+      "images/cursor/frames/robot-run-07.png",
+      "images/cursor/frames/robot-run-08.png"
+    ],
+    aim: [
+      "images/cursor/frames/robot-aim-01.png",
+      "images/cursor/frames/robot-aim-02.png",
+      "images/cursor/frames/robot-aim-03.png",
+      "images/cursor/frames/robot-aim-04.png"
+    ],
+    attack: [
+      "images/cursor/frames/robot-attack-01.png",
+      "images/cursor/frames/robot-attack-02.png",
+      "images/cursor/frames/robot-attack-03.png",
+      "images/cursor/frames/robot-attack-04.png",
+      "images/cursor/frames/robot-attack-05.png",
+      "images/cursor/frames/robot-attack-06.png",
+      "images/cursor/frames/robot-attack-07.png",
+      "images/cursor/frames/robot-attack-08.png"
+    ]
+  };
+
+  const hotspotX = 4;
+  const hotspotY = 4;
+  const timings = {
+    idle: 120,
+    run: 70,
+    aim: 90,
+    attack: 60
+  };
+  const runDecayMs = 140;
+  const attackDurationMs = 320;
+  const priorityAimSelector = ".project-link, .publication-card a";
+  const interactiveSelector = "a, button, [role='button'], input, select, textarea, summary, label";
+
+  const root = document.documentElement;
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const setFrame = (src) => {
+    root.style.setProperty("--robot-cursor", `url("${src}") ${hotspotX} ${hotspotY}`);
+  };
+
+  const isOverInteractive = (target) => {
+    return !!(target && typeof target.closest === "function" && target.closest(interactiveSelector));
+  };
+
+  const isOverPriorityAim = (target) => {
+    return !!(target && typeof target.closest === "function" && target.closest(priorityAimSelector));
+  };
+
+  const hasFrames = (set) => Array.isArray(set) && set.length > 0;
+  if (!hasFrames(cursorSets.idle)) return;
+
+  Object.values(cursorSets).flat().forEach((src) => {
+    const img = new Image();
+    img.src = src;
+  });
+
+  let state = "idle";
+  let index = 0;
+  let attackUntil = 0;
+  let lastMove = 0;
+  let lastX = null;
+  let lastY = null;
+  let overPriorityAim = false;
+  let overInteractive = false;
+
+  const chooseState = (now) => {
+    if (now < attackUntil && hasFrames(cursorSets.attack)) return "attack";
+    if (overPriorityAim && hasFrames(cursorSets.aim)) return "aim";
+    if (overInteractive && hasFrames(cursorSets.aim)) return "aim";
+    if (now - lastMove <= runDecayMs && hasFrames(cursorSets.run)) return "run";
+    return "idle";
+  };
+
+  const setState = (nextState) => {
+    if (state === nextState) return;
+    state = nextState;
+    index = 0;
+  };
+
+  const tick = () => {
+    const now = performance.now();
+    setState(chooseState(now));
+    const frames = cursorSets[state];
+
+    setFrame(frames[index % frames.length]);
+    index += 1;
+    window.setTimeout(tick, timings[state]);
+  };
+
+  const markMovement = (event) => {
+    if (typeof event.clientX !== "number" || typeof event.clientY !== "number") return;
+    if (lastX === null || lastY === null) {
+      lastX = event.clientX;
+      lastY = event.clientY;
+      lastMove = performance.now();
+      return;
+    }
+
+    const moved = Math.abs(event.clientX - lastX) + Math.abs(event.clientY - lastY);
+    lastX = event.clientX;
+    lastY = event.clientY;
+
+    if (moved > 0) {
+      lastMove = performance.now();
+    }
+
+    overPriorityAim = isOverPriorityAim(event.target);
+    overInteractive = isOverInteractive(event.target);
+  };
+
+  setFrame(cursorSets.idle[0]);
+  if (prefersReducedMotion) return;
+
+  document.addEventListener("pointermove", markMovement, { passive: true });
+  document.addEventListener("pointerover", (event) => {
+    overPriorityAim = isOverPriorityAim(event.target);
+    overInteractive = isOverInteractive(event.target);
+  }, { passive: true });
+  document.addEventListener("pointerout", (event) => {
+    const next = event.relatedTarget;
+    overPriorityAim = isOverPriorityAim(next);
+    overInteractive = isOverInteractive(next);
+  }, { passive: true });
+  document.addEventListener("pointerdown", () => {
+    attackUntil = performance.now() + attackDurationMs;
+  });
+
+  tick();
+})();
+</script>
 
 
 <link rel="stylesheet" href="custom.css">

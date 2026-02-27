@@ -6,6 +6,7 @@ project:
     - CNAME
     - files/pinkbrain.glb
     - images/bluesky.svg
+    - images/cursor/frames
 
 website:
   title: "Nykko Vitali"
@@ -59,6 +60,7 @@ format:
     css: custom.css
     include-in-header:
       - includes/model-viewer.html
+      - includes/robot-cursor.html
     toc: false
     smooth-scroll: true
     anchor-sections: true

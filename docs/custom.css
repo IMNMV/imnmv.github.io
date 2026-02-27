@@ -12,10 +12,28 @@
   --cut-lg: 16px;
   --cut-md: 11px;
   --cut-sm: 8px;
+  --robot-cursor: auto;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+html,
+body,
+body * {
+  cursor: var(--robot-cursor), auto !important;
+}
+
+a,
+button,
+[role="button"],
+input,
+select,
+textarea,
+summary,
+label {
+  cursor: var(--robot-cursor), pointer !important;
 }
 
 body {
