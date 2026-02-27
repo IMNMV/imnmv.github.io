@@ -12,8 +12,6 @@ document.documentElement.classList.add("js-typing");
 ::: {.hero-card}
 ::: {.hero-grid}
 ::: {.hero-copy}
-<span class="hero-kicker intro-item intro-delay-1">Harvard University · Psychology PhD</span>
-
 ::: {.name-row .intro-item .intro-delay-2}
 # Nykko Vitali
 
