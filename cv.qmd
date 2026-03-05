@@ -4,16 +4,16 @@ title: ""
 
 ::: {.cv-inline-shell}
 ::: {.cv-inline-toolbar}
-[Download CV (PDF)](files/VitaliNykko_CV_FEB2026.pdf){.btn .btn-outline-primary .btn-lg target="_blank"}
+[Download CV (PDF)](files/VitaliNykko_2026_CV.pdf){.btn .btn-outline-primary .btn-lg target="_blank"}
 :::
 
 <iframe
   class="cv-inline-frame"
-  src="files/VitaliNykko_CV_FEB2026.pdf#view=FitH"
+  src="files/VitaliNykko_2026_CV.pdf#view=FitH"
   title="Nykko Vitali Curriculum Vitae"
 ></iframe>
 
 ::: {.cv-inline-fallback}
-If the embedded view does not load, [open the PDF directly](files/VitaliNykko_CV_FEB2026.pdf){target="_blank"}.
+If the embedded view does not load, [open the PDF directly](files/VitaliNykko_2026_CV.pdf){target="_blank"}.
 :::
 :::

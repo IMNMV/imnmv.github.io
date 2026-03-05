@@ -41,11 +41,11 @@ document.documentElement.classList.add("js-typing");
 :::
 
 ::: {.hero-bio}
-<p class="type-reveal" data-type-speed="24">I am a second-year PhD student in Psychology at Harvard University. I work primarily with Jason Mitchell and Mahzarin R. Banaji.</p>
+<p class="type-reveal" data-type-speed="24">I am a PhD student in Psychology at Harvard University. I work primarily with Jason Mitchell and Mahzarin R. Banaji.</p>
 :::
 
 ::: {.hero-bio}
-<p class="type-reveal" data-type-speed="24">My research program is bi-directional. On one end, I combine behavioral experiments and computational modeling to study how people metacognitively evaluate information, intentions, and intelligence in digital environments. On the other, I am quite interested in exploring what aspects of human cognition have seeped into the weights of AI, especially LLMs, and how aligned they are with human behaviors.</p>
+<p class="type-reveal" data-type-speed="24">My research program is bi-directional. On one end, I combine behavioral experiments and computational modeling to study how people metacognitively evaluate information, update their beliefs, and what cues they focus on in digital environments. On the other, I am quite interested in exploring what aspects of human cognition have seeped into the weights of LLMs, and how aligned they are with human behavior.</p>
 :::
 
 ::: {.hero-bio}
@@ -65,8 +65,37 @@ Human-AI interaction and belief updating during uncertainty & Reasoning inconsis
 :::
 :::
 :::
+:::
 
-## Selected Work {.section-title}
+::: {.spotlight-grid}
+::: {.spotlight-column .spotlight-column-publication}
+## Publication Spotlight {.section-title}
+
+::: {.publication-card}
+**Lehr, S. A., Saichandran, K. S., Harmon-Jones, E., Vitali, N., & Banaji, M. R. (2025).**  
+*Kernels of selfhood: GPT-4o shows humanlike patterns of cognitive dissonance moderated by free choice.*  
+*Proceedings of the National Academy of Sciences*, 122(20), e2501823122.  
+[Read the paper](https://www.pnas.org/doi/10.1073/pnas.2501823122){.publication-link target="_blank"}
+:::
+:::
+
+::: {.spotlight-column .spotlight-column-poster}
+## Recent Poster Presentation {.section-title}
+
+::: {.poster-card}
+```{=html}
+<div class="poster-meta-row">
+  <span class="poster-subtitle">Presented at Society for Personality and Social Psychology, February, 2026</span>
+  <a class="poster-link" href="files/recent-poster.pdf" target="_blank">Open full poster (PDF)</a>
+</div>
+```
+
+<iframe class="poster-preview" src="files/recent-poster.pdf#view=FitH" title="Recent poster presentation PDF preview" loading="lazy"></iframe>
+:::
+:::
+:::
+
+## Side Projects {.section-title}
 
 ::: {.project-grid}
 ::: {.project-card}
@@ -79,16 +108,6 @@ R MCP integration for interactive, agent-assisted coding in RStudio.
 ### A Quantitative Comaprison of Wikipedia vs. Grokipedia
 A comparative project exploring information quality and narrative framing across model-generated and encyclopedia-style content.
 [View repository](https://github.com/IMNMV/wikipediavsgrokipedia){.project-link target="_blank"}
-:::
-:::
-
-## Publication Spotlight {.section-title}
-
-::: {.publication-card}
-**Lehr, S. A., Saichandran, K. S., Harmon-Jones, E., Vitali, N., & Banaji, M. R. (2025).**  
-*Kernels of selfhood: GPT-4o shows humanlike patterns of cognitive dissonance moderated by free choice.*  
-*Proceedings of the National Academy of Sciences*, 122(20), e2501823122.  
-[Read the paper](https://www.pnas.org/doi/10.1073/pnas.2501823122){target="_blank"}
 :::
 :::
 
@@ -127,6 +146,52 @@ A comparative project exploring information quality and narrative framing across
       tick();
     };
 
+    const nameHeading = document.querySelector(".name-row h2");
+    if (nameHeading && !nameHeading.dataset.maskInit) {
+      const rawName = nameHeading.textContent.trim();
+      nameHeading.dataset.maskInit = "true";
+      nameHeading.textContent = "";
+
+      for (const ch of rawName) {
+        const span = document.createElement("span");
+        span.className = ch === " " ? "name-gap" : "name-char";
+        span.textContent = ch;
+        nameHeading.appendChild(span);
+      }
+    }
+
+    const nameChars = Array.from(document.querySelectorAll(".name-row .name-char"));
+    let nameMaskStarted = false;
+    const startNameMaskEffect = () => {
+      if (nameMaskStarted || prefersReducedMotion || nameChars.length === 0) return;
+      nameMaskStarted = true;
+
+      const triggerMaskPulse = () => {
+        const pulseSize = Math.random() < 0.72 ? 1 : 2;
+        const picked = new Set();
+
+        while (picked.size < pulseSize) {
+          picked.add(Math.floor(Math.random() * nameChars.length));
+        }
+
+        picked.forEach((idx) => {
+          const charEl = nameChars[idx];
+          if (!charEl) return;
+          charEl.classList.add("is-masked");
+          const revealAfter = 130 + Math.random() * 290;
+          window.setTimeout(() => {
+            charEl.classList.remove("is-masked");
+          }, revealAfter);
+        });
+
+        const nextPulse = 860 + Math.random() * 1960;
+        window.setTimeout(triggerMaskPulse, nextPulse);
+      };
+
+      const initialDelay = 1200 + Math.random() * 1200;
+      window.setTimeout(triggerMaskPulse, initialDelay);
+    };
+
     if (revealLines.length > 0) {
       if (prefersReducedMotion) {
         revealLines.forEach((line) => {
@@ -136,6 +201,7 @@ A comparative project exploring information quality and narrative framing across
           line.classList.remove("typewriter-active");
           line.classList.add("typewriter-done");
         });
+        startNameMaskEffect();
       } else {
         revealLines.forEach((line) => {
           const fullText = line.dataset.fullText || line.textContent.trim();
@@ -145,7 +211,10 @@ A comparative project exploring information quality and narrative framing across
 
         let idx = 0;
         const runNext = () => {
-          if (idx >= revealLines.length) return;
+          if (idx >= revealLines.length) {
+            startNameMaskEffect();
+            return;
+          }
           animateTypedLine(revealLines[idx], () => {
             idx += 1;
             window.setTimeout(runNext, 220);
@@ -153,6 +222,8 @@ A comparative project exploring information quality and narrative framing across
         };
         window.setTimeout(runNext, 420);
       }
+    } else {
+      startNameMaskEffect();
     }
 
     const brainOrb = document.querySelector(".brain-orb");

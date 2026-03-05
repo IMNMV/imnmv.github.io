@@ -14,7 +14,7 @@ website:
   navbar:
     background: "#1e2a23"
     foreground: "#f4f8f2"
-    title: "<span class=\"logo-text\">Nykko Vitali</span>"
+    title: "<span class=\"logo-text\">I M N V</span>"
     left:
       - href: index.qmd
         text: Home

@@ -11,7 +11,7 @@
     "href": "index.html",
     "title": "Nykko Vitali",
     "section": "",
-    "text": "That’s me!\n\n\n\n\nI am a second-year PhD student in Psychology at Harvard University. I work primarily with Jason Mitchell and Mahzarin R. Banaji.\n\n\n\n\nMy research program is bi-directional. On one end, I combine behavioral experiments and computational modeling to study how people metacognitively evaluate information, intentions, and intelligence in digital environments. On the other, I am quite interested in exploring what aspects of human cognition have seeped into the weights of AI, especially LLMs, and how aligned they are with human behaviors.\n\n\n\n\nI also love stand-up comedy, building tools for various applications, and the manga One Piece :)\n\n\n\n\n\n\nCurrent Focus\nHuman-AI interaction and belief updating during uncertainty & Reasoning inconsistencies in LLMs\n\n\n\n\n\n\n\n\n\nR MCP integration for interactive, agent-assisted coding in RStudio. View repository\n\n\n\nA comparative project exploring information quality and narrative framing across model-generated and encyclopedia-style content. View repository\n\n\n\n\n\n\nLehr, S. A., Saichandran, K. S., Harmon-Jones, E., Vitali, N., & Banaji, M. R. (2025).\nKernels of selfhood: GPT-4o shows humanlike patterns of cognitive dissonance moderated by free choice.\nProceedings of the National Academy of Sciences, 122(20), e2501823122.\nRead the paper"
+    "text": "That’s me!\n\n\n\n\nI am a PhD student in Psychology at Harvard University. I work primarily with Jason Mitchell and Mahzarin R. Banaji.\n\n\n\n\nMy research program is bi-directional. On one end, I combine behavioral experiments and computational modeling to study how people metacognitively evaluate information, update their beliefs, and what cues they focus on in digital environments. On the other, I am quite interested in exploring what aspects of human cognition have seeped into the weights of LLMs, and how aligned they are with human behavior.\n\n\n\n\nI also love stand-up comedy, building tools for various applications, and the manga One Piece :)\n\n\n\n\n\n\nCurrent Focus\nHuman-AI interaction and belief updating during uncertainty & Reasoning inconsistencies in LLMs"
   },
   {
     "objectID": "index.html#nykko-vitali",
@@ -21,17 +21,24 @@
     "text": "That’s me!"
   },
   {
-    "objectID": "index.html#selected-work",
-    "href": "index.html#selected-work",
-    "title": "Nykko Vitali",
-    "section": "",
-    "text": "R MCP integration for interactive, agent-assisted coding in RStudio. View repository\n\n\n\nA comparative project exploring information quality and narrative framing across model-generated and encyclopedia-style content. View repository"
-  },
-  {
     "objectID": "index.html#publication-spotlight",
     "href": "index.html#publication-spotlight",
     "title": "Nykko Vitali",
-    "section": "",
-    "text": "Lehr, S. A., Saichandran, K. S., Harmon-Jones, E., Vitali, N., & Banaji, M. R. (2025).\nKernels of selfhood: GPT-4o shows humanlike patterns of cognitive dissonance moderated by free choice.\nProceedings of the National Academy of Sciences, 122(20), e2501823122.\nRead the paper"
+    "section": "Publication Spotlight",
+    "text": "Publication Spotlight\n\nLehr, S. A., Saichandran, K. S., Harmon-Jones, E., Vitali, N., & Banaji, M. R. (2025).\nKernels of selfhood: GPT-4o shows humanlike patterns of cognitive dissonance moderated by free choice.\nProceedings of the National Academy of Sciences, 122(20), e2501823122.\nRead the paper"
+  },
+  {
+    "objectID": "index.html#recent-poster-presentation",
+    "href": "index.html#recent-poster-presentation",
+    "title": "Nykko Vitali",
+    "section": "Recent Poster Presentation",
+    "text": "Recent Poster Presentation\n\n\n  Presented at Society for Personality and Social Psychology, February, 2026\n  Open full poster (PDF)"
+  },
+  {
+    "objectID": "index.html#side-projects",
+    "href": "index.html#side-projects",
+    "title": "Nykko Vitali",
+    "section": "Side Projects",
+    "text": "Side Projects\n\n\nClaudeR\nR MCP integration for interactive, agent-assisted coding in RStudio. View repository\n\n\nA Quantitative Comaprison of Wikipedia vs. Grokipedia\nA comparative project exploring information quality and narrative framing across model-generated and encyclopedia-style content. View repository"
   }
 ]
