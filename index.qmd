@@ -80,17 +80,22 @@ Human-AI interaction and belief updating during uncertainty & Reasoning inconsis
 :::
 
 ::: {.spotlight-column .spotlight-column-poster}
-## Recent Poster Presentation {.section-title}
+```{=html}
+<div class="poster-section-head">
+  <h2 class="section-title">Recent Poster Presentation</h2>
+  <a class="archive-link" href="posters.html">See past posters →</a>
+</div>
+```
 
 ::: {.poster-card}
 ```{=html}
 <div class="poster-meta-row">
-  <span class="poster-subtitle">Presented at Society for Personality and Social Psychology, February, 2026</span>
-  <a class="poster-link" href="files/recent-poster.pdf" target="_blank">Open full poster (PDF)</a>
+  <span class="poster-subtitle">Presented at Communication & Intelligences Summit, University of Chicago, May 2026</span>
+  <a class="poster-link" href="files/vitali-uchicago-may2026.pdf" target="_blank">Open full poster (PDF)</a>
 </div>
 ```
 
-<iframe class="poster-preview" src="files/recent-poster.pdf#view=FitH" title="Recent poster presentation PDF preview" loading="lazy"></iframe>
+<iframe class="poster-preview" src="files/vitali-uchicago-may2026.pdf#view=FitH" title="Recent poster presentation PDF preview" loading="lazy"></iframe>
 :::
 :::
 :::

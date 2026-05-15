@@ -1,0 +1,18 @@
+---
+title: ""
+---
+
+::: {.posters-archive}
+## Past Posters {.section-title}
+
+::: {.poster-card}
+```{=html}
+<div class="poster-meta-row">
+  <span class="poster-subtitle">Presented at Society for Personality and Social Psychology, February 2026</span>
+  <a class="poster-link" href="files/vitali-spsp-feb2026.pdf" target="_blank">Open full poster (PDF)</a>
+</div>
+```
+
+<iframe class="poster-preview" src="files/vitali-spsp-feb2026.pdf#view=FitH" title="SPSP February 2026 poster preview" loading="lazy"></iframe>
+:::
+:::
