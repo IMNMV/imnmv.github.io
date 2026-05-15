@@ -105,6 +105,12 @@ R MCP integration for interactive, agent-assisted coding in RStudio.
 :::
 
 ::: {.project-card}
+### Collective Anthropomorphization
+My exploration into how viewers on a Twitch stream watched a reasoning trace visible LLM play Pokemon Red for three days straight including regression and topic models.
+[View write-up](https://nykkovitali.com/Claude-Plays-Pokemon/){.project-link target="_blank"}
+:::
+
+::: {.project-card}
 ### A Quantitative Comaprison of Wikipedia vs. Grokipedia
 A comparative project exploring information quality and narrative framing across model-generated and encyclopedia-style content.
 [View repository](https://github.com/IMNMV/wikipediavsgrokipedia){.project-link target="_blank"}
