@@ -41,7 +41,7 @@ document.documentElement.classList.add("js-typing");
 :::
 
 ::: {.hero-bio}
-<p class="type-reveal" data-type-speed="24">I am a PhD student in Psychology at Harvard University. I work primarily with Jason Mitchell and Mahzarin R. Banaji.</p>
+<p class="type-reveal" data-type-speed="24">I am a PhD student in Psychology at Harvard University. I work primarily with Jason P. Mitchell and Mahzarin R. Banaji.</p>
 :::
 
 ::: {.hero-bio}
@@ -60,7 +60,7 @@ document.documentElement.classList.add("js-typing");
 ::: {.panel-note}
 **Current Focus**
 
-Human-AI interaction and belief updating during uncertainty & Reasoning inconsistencies in LLMs
+Human-AI interaction and belief updating under uncertainty & Machine Psychology
 :::
 :::
 :::
