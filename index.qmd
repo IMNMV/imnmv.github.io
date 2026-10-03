@@ -45,7 +45,7 @@ document.documentElement.classList.add("js-typing");
 :::
 
 ::: {.hero-bio}
-<p class="type-reveal" data-type-speed="24">My research program is bi-directional. On one end, I combine behavioral experiments and computational modeling to study how people metacognitively evaluate information, update their beliefs, and what cues they focus on in digital environments. On the other, I am quite interested in exploring what aspects of human cognition have seeped into the weights of LLMs, and how aligned they are with human behavior.</p>
+<p class="type-reveal" data-type-speed="24">My research program is bi-directional. On one end, I combine behavioral experiments to uncover what processes people use when judging the humanness or AI-ness of text, how they update their beliefs, and what cues they focus on in digital environments. On the other, I examine what aspects of human cognition have seeped into the weights of LLMs, and where these models align (or diverge) from human behavior.</p>
 :::
 
 ::: {.hero-bio}
