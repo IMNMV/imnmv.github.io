@@ -276,3 +276,204 @@ My exploration into how viewers on a Twitch stream watched a reasoning trace vis
 })();
 </script>
 ```
+
+```{=html}
+<script>
+// Sand effect: moving the mouse through the name scatters the letters under it
+// into grains, which drift back and fill the letters in again.
+(() => {
+  const init = () => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const row = document.querySelector(".name-row");
+    const name = row && row.querySelector("h2");
+    if (!name) return;
+
+    const PAD = 70;    // room around the name for grains to fly
+    const R = 26;      // brush radius (px)
+    const OUT = 380;   // ms grains fly outward
+    const BACK = 1150; // ms until grains are home and the letters are whole again
+    const MAX_HOLES = 24;
+
+    const canvas = document.createElement("canvas");
+    canvas.className = "sand-canvas";
+    canvas.setAttribute("aria-hidden", "true");
+    row.appendChild(canvas);
+    const ctx = canvas.getContext("2d");
+    const glyph = document.createElement("canvas");
+    const gctx = glyph.getContext("2d", { willReadFrequently: true });
+
+    let dpr = 1, w = 0, h = 0, ink = null, sampledAt = 0;
+    let grains = [], holes = [], lastPt = null, running = false, lastFrame = 0;
+    const ease = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+
+    const layout = () => {
+      dpr = window.devicePixelRatio || 1;
+      w = name.offsetWidth;
+      h = name.offsetHeight;
+      canvas.style.left = name.offsetLeft - PAD + "px";
+      canvas.style.top = name.offsetTop - PAD + "px";
+      canvas.style.width = w + PAD * 2 + "px";
+      canvas.style.height = h + PAD * 2 + "px";
+      canvas.width = Math.round((w + PAD * 2) * dpr);
+      canvas.height = Math.round((h + PAD * 2) * dpr);
+    };
+
+    // Draw the letters as they look right now, so grains only come from ink
+    const sample = () => {
+      const cs = getComputedStyle(name);
+      const fvs = cs.fontVariationSettings;
+      const axis = (tag, dflt) => {
+        const m = fvs.match(new RegExp('"' + tag + '"\\s+(-?[\\d.]+)'));
+        return m ? parseFloat(m[1]) : dflt;
+      };
+      const wght = Math.round(axis("wght", 500));
+      const skew = Math.tan((axis("slnt", 0) * Math.PI) / 180);
+      glyph.width = w;
+      glyph.height = h;
+      gctx.font = `${wght} ${parseFloat(cs.fontSize)}px Recursive, sans-serif`;
+      gctx.fillStyle = "#000";
+      const box = name.getBoundingClientRect();
+      for (const span of name.querySelectorAll(".name-char")) {
+        if (span.classList.contains("is-masked")) continue;
+        const r = span.getBoundingClientRect();
+        const m = gctx.measureText(span.textContent);
+        const asc = m.fontBoundingBoxAscent;
+        const desc = m.fontBoundingBoxDescent;
+        const baseline = r.top - box.top + (r.height - (asc + desc)) / 2 + asc;
+        gctx.save();
+        gctx.translate(r.left - box.left, baseline);
+        gctx.transform(1, 0, skew, 1, 0, 0);
+        gctx.fillText(span.textContent, 0, 0);
+        gctx.restore();
+      }
+      ink = gctx.getImageData(0, 0, w, h).data;
+      sampledAt = performance.now();
+    };
+
+    const inkAt = (x, y) => {
+      x = Math.round(x);
+      y = Math.round(y);
+      if (!ink || x < 0 || y < 0 || x >= w || y >= h) return false;
+      return ink[(y * w + x) * 4 + 3] > 128;
+    };
+
+    const brush = (x, y, vx, vy) => {
+      const now = performance.now();
+      if (now - sampledAt > 150) sample();
+      holes.push({ x, y, t: now });
+      if (holes.length > MAX_HOLES) holes.shift();
+      let made = 0;
+      for (let i = 0; i < 90 && made < 26; i++) {
+        const a = Math.random() * Math.PI * 2;
+        const d = Math.sqrt(Math.random()) * R * 0.85;
+        const hx = x + Math.cos(a) * d;
+        const hy = y + Math.sin(a) * d;
+        if (!inkAt(hx, hy)) continue;
+        const len = Math.hypot(hx - x, hy - y) || 1;
+        const kick = 2.2 + Math.random() * 3.2;
+        grains.push({
+          hx, hy, x: hx, y: hy, t: now,
+          vx: ((hx - x) / len) * kick + vx * 0.25 + (Math.random() - 0.5),
+          vy: ((hy - y) / len) * kick + vy * 0.25 + (Math.random() - 0.5) - 0.6,
+          s: Math.random() < 0.3 ? 2 : 1.4,
+        });
+        made++;
+      }
+      if (grains.length > 1400) grains.splice(0, grains.length - 1400);
+      if (!running) {
+        running = true;
+        lastFrame = performance.now();
+        requestAnimationFrame(tick);
+      }
+    };
+
+    const applyMask = (now) => {
+      holes = holes.filter((hl) => now - hl.t < BACK);
+      if (!holes.length) {
+        name.style.webkitMaskImage = "";
+        name.style.maskImage = "";
+        return;
+      }
+      const layers = holes
+        .map((hl) => {
+          const age = now - hl.t;
+          const r = Math.max(age < OUT ? R : R * (1 - ease((age - OUT) / (BACK - OUT))), 0.1);
+          return `radial-gradient(circle ${r.toFixed(1)}px at ${hl.x.toFixed(1)}px ${hl.y.toFixed(1)}px, transparent ${(r * 0.8).toFixed(1)}px, #000 ${r.toFixed(1)}px)`;
+        })
+        .join(", ");
+      name.style.webkitMaskImage = layers;
+      name.style.webkitMaskComposite = "source-in";
+      name.style.maskImage = layers;
+      name.style.maskComposite = "intersect";
+    };
+
+    const tick = (now) => {
+      const dt = Math.min(Math.max((now - lastFrame) / 16.67, 0), 3); // frame-rate independent
+      lastFrame = now;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, w + PAD * 2, h + PAD * 2);
+      ctx.fillStyle = getComputedStyle(name).color;
+      grains = grains.filter((g) => now - g.t < BACK);
+      for (const g of grains) {
+        const age = now - g.t;
+        if (age < OUT) {
+          const f = Math.pow(0.9, dt);
+          g.vx *= f;
+          g.vy = g.vy * f + 0.12 * dt;
+          g.x += g.vx * dt;
+          g.y += g.vy * dt;
+        } else {
+          if (g.ox === undefined) {
+            g.ox = g.x;
+            g.oy = g.y;
+          }
+          const p = ease(Math.min((age - OUT) / (BACK - OUT), 1));
+          g.x = g.ox + (g.hx - g.ox) * p;
+          g.y = g.oy + (g.hy - g.oy) * p;
+        }
+        ctx.fillRect(g.x + PAD - g.s / 2, g.y + PAD - g.s / 2, g.s, g.s);
+      }
+      applyMask(now);
+      if (grains.length || holes.length) {
+        requestAnimationFrame(tick);
+      } else {
+        running = false;
+        ctx.clearRect(0, 0, w + PAD * 2, h + PAD * 2);
+      }
+    };
+
+    document.addEventListener(
+      "pointermove",
+      (e) => {
+        const box = name.getBoundingClientRect();
+        const x = e.clientX - box.left;
+        const y = e.clientY - box.top;
+        if (x < -R || y < -R || x > box.width + R || y > box.height + R) {
+          lastPt = null;
+          return;
+        }
+        if (!w) layout();
+        const vx = lastPt ? x - lastPt.x : 0;
+        const vy = lastPt ? y - lastPt.y : 0;
+        if (lastPt && Math.hypot(vx, vy) < 4) return;
+        lastPt = { x, y };
+        brush(x, y, vx, vy);
+      },
+      { passive: true }
+    );
+    window.addEventListener("resize", () => {
+      layout();
+      sampledAt = 0;
+    });
+    if (document.fonts) document.fonts.ready.then(layout);
+    layout();
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
+  } else {
+    init();
+  }
+})();
+</script>
+```

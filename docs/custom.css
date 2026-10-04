@@ -1178,3 +1178,29 @@ h2.section-title .anchorjs-link {
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
+
+/* Name treatment: shape-shifting (Recursive), slowly morphs between neat and casual */
+.name-row h1,
+.name-row h2 {
+  font-family: "Recursive", sans-serif;
+  background-image: none;
+  color: var(--accent-strong);
+  -webkit-text-fill-color: var(--accent-strong);
+  animation: name-breathe 4s ease-in-out infinite alternate;
+}
+
+@keyframes name-breathe {
+  from { font-variation-settings: "CASL" 0, "wght" 500, "slnt" 0; }
+  to { font-variation-settings: "CASL" 1, "wght" 900, "slnt" -15; }
+}
+
+/* Sand effect: grains drawn on a canvas over the name (see index.qmd) */
+.name-row {
+  position: relative;
+}
+
+.sand-canvas {
+  position: absolute;
+  pointer-events: none;
+  z-index: 3;
+}
