@@ -49,7 +49,7 @@ document.documentElement.classList.add("js-typing");
 :::
 
 ::: {.hero-bio}
-<p class="type-reveal" data-type-speed="24">I also love stand-up comedy, building tools for various applications, and the manga One Piece :)</p>
+<p class="type-reveal" data-type-speed="24">I also love stand-up comedy, building tools for various applications, making instrumental music, and the manga One Piece :)</p>
 :::
 
 :::
