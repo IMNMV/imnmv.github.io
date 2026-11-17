@@ -20,6 +20,8 @@ website:
         text: Home
       - href: cv.qmd
         text: CV
+      - href: resume.qmd
+        text: Resume
     right:
       - icon: mortarboard
         href: https://scholar.google.com/citations?user=z493MFoAAAAJ&hl=en

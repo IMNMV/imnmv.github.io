@@ -1,0 +1,19 @@
+---
+title: ""
+---
+
+::: {.cv-inline-shell}
+::: {.cv-inline-toolbar}
+[Download Resume (PDF)](files/VitaliNykko_2026_Resume.pdf){.btn .btn-outline-primary .btn-lg target="_blank"}
+:::
+
+<iframe
+  class="cv-inline-frame"
+  src="files/VitaliNykko_2026_Resume.pdf#view=FitH"
+  title="Nykko Vitali Resume"
+></iframe>
+
+::: {.cv-inline-fallback}
+If the embedded view does not load, [open the PDF directly](files/VitaliNykko_2026_Resume.pdf){target="_blank"}.
+:::
+:::
