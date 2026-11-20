@@ -2,6 +2,7 @@
 # Quarto
 /.quarto/
 /_site/
+/_quarto_old_output/
 /docs/.quarto/
 
 # R

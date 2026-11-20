@@ -1,7 +1,10 @@
+# Retired Nov 19 2026. The live site is the hand-written pages in docs/
+# (index.html, cv.html, resume.html, posters.html, site.css, site.js); see README.md.
+# Output goes to _quarto_old_output/ so a render cannot overwrite the live pages.
 # _quarto.yml  
 project:
   type: website
-  output-dir: docs
+  output-dir: _quarto_old_output
   resources:
     - CNAME
     - files/pinkbrain.glb
