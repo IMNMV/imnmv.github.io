@@ -127,7 +127,24 @@
   /* ---------- the brain takes the place of the name's "o" ---------- */
   const orb = document.querySelector(".brain-orb");
   const oSpan = orb && name && cfg.brainAsO !== undefined ? chars.find((c) => c.textContent === "o") : null;
-  if (oSpan) oSpan.dataset.noink = "";
+  // The letter stays until the model has loaded, then the brain takes its place.
+  // If the model never loads (no WebGL, script blocked), the name simply stays whole.
+  if (oSpan) {
+    const mv = orb.querySelector("model-viewer");
+    let swapped = false;
+    const swap = () => {
+      if (swapped) return;
+      swapped = true;
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        oSpan.dataset.noink = "";
+        orb.classList.add("ready");
+      }));
+    };
+    if (mv) {
+      mv.addEventListener("load", swap);
+      if (mv.loaded) swap();
+    }
+  }
   const placeOrb = () => {
     if (!oSpan) return;
     const r = oSpan.getBoundingClientRect();
