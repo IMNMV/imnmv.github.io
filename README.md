@@ -7,4 +7,6 @@ When the CV or resume PDF changes, replace it in `docs/files/` and remake the pa
     pdftoppm -r 170 -png docs/files/VitaliNykko_2026_CV.pdf docs/images/pages/cv
     pdftoppm -r 170 -png docs/files/VitaliNykko_2026_Resume.pdf docs/images/pages/resume
 
+The browser tab icon is drawn in `docs/icon.svg` (NV as one line, pink on black). `docs/favicon.ico` (16, 32 and 48 pixels) and `docs/apple-touch-icon.png` (180 pixels) are pictures of that drawing; if the drawing changes, save it as a 512 pixel picture and shrink it to those sizes again.
+
 The Quarto files in this folder (`_quarto.yml`, the `.qmd` pages, `custom.css`, `styles.scss`, `includes/`) are the previous version of the site, kept for reference. `_quarto.yml` now writes to `_quarto_old_output/`, so rendering it cannot overwrite the live pages.
