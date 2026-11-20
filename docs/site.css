@@ -102,14 +102,11 @@ main, .foot { margin: 0 var(--rail); }
 }
 .brain-orb:hover .brain-tooltip { opacity: 1; visibility: visible; }
 
-/* ---------- ticker ---------- */
+/* ---------- current focus bar: the line sits still, once, between two red squares ---------- */
 .ticker { display: flex; align-items: stretch; background: var(--k); color: var(--y); border-top: 3px solid var(--k); border-bottom: 3px solid var(--k); font-family: "Silkscreen", monospace; font-size: 16px; line-height: 1; letter-spacing: 1px; text-transform: uppercase; }
-.ticker b { flex: 0 0 auto; font-weight: 400; background: var(--y); color: var(--k); padding: 13px 16px 14px var(--pad); }
-.ticker-run { flex: 1 1 auto; overflow: hidden; display: flex; align-items: center; }
-.ticker-track { display: flex; white-space: nowrap; animation: tick 46s linear infinite; }
-.ticker-track span { padding: 0 34px; }
-.ticker-track span::after { content: "\25A0"; color: var(--r); margin-left: 68px; }
-@keyframes tick { to { transform: translateX(-50%); } }
+.ticker b { flex: 0 0 auto; display: flex; align-items: center; font-weight: 400; background: var(--y); color: var(--k); padding: 13px 16px 14px var(--pad); }
+.ticker p { flex: 1 1 auto; min-width: 0; margin: 0; display: flex; align-items: center; justify-content: space-between; gap: 30px; padding: 13px var(--pad) 14px 30px; line-height: 1.5; text-align: center; }
+.ticker p::before, .ticker p::after { content: "\25A0"; flex: 0 0 auto; color: var(--r); line-height: 1; }
 
 /* ---------- about ---------- */
 .about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 32%); gap: 48px; padding: 54px 0 0 var(--pad); align-items: end; }
@@ -189,6 +186,11 @@ a.go:hover { background: var(--k); color: var(--y); }
   .rail-l a { writing-mode: horizontal-tb; transform: none; }
   .rail-l .mark { margin: 0 6px 0 0; order: -1; }
   .rail-r { justify-content: flex-start; gap: 6px; }
+  .ticker { flex-direction: column; }
+  .ticker b { padding-right: var(--pad); }
+  .ticker p { padding-left: var(--pad); gap: 16px; text-align: left; align-items: flex-start; }
+  .ticker p::before { line-height: inherit; }
+  .ticker p::after { display: none; }
   .about { grid-template-columns: minmax(0, 1fr); gap: 0; padding-top: 36px; }
   .bio { padding-right: var(--pad); padding-bottom: 28px; }
   .face { max-width: 320px; }
@@ -206,5 +208,5 @@ a.go:hover { background: var(--k); color: var(--y); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ticker-track, .brain-orb model-viewer { animation: none; }
+  .brain-orb model-viewer { animation: none; }
 }
