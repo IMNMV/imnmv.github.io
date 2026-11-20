@@ -363,8 +363,41 @@
     });
   }
 
-  /* ---------- robot cursor ---------- */
-  (() => {
+  /* ---------- brain cursor (body[data-brain-cursor]) ----------
+     A small pixel brain follows the pointer, turns the way it moves, spins when it rests
+     and squashes on a click. It only starts for a real mouse or trackpad, and not when
+     the visitor asks for less motion. If it cannot load, the ordinary pointer stays. */
+  const params = new URLSearchParams(location.search);
+  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches || params.get("cursor") === "brain";
+  const brainCursor = cfg.brainCursor !== undefined && finePointer && !reduced && params.get("cursor") !== "robot";
+  if (brainCursor) {
+    // the brain is the pointer: the ordinary arrow is hidden and the brain sits on the click point.
+    // ?beside=1 brings the arrow back and puts the brain next to it instead
+    const alone = params.get("beside") !== "1";
+    const scale = Number(params.get("cursorscale")) || 2;
+    if (!alone) root.classList.add("brain-beside");
+    import("./brain-cursor/brain-cursor.js")
+      .then((m) => m.createBrainCursor({
+        sheetUrl: "brain-cursor/brain_slices.png",
+        count: 18,
+        scale,
+        squash: 0.75,
+        spacing: 1,
+        outline: "#2e1026",
+        sparkColors: ["#e78fbf", "#d22a0b", "#141414"],
+        enableDebugKey: false,
+        // with ?beside=1 the ordinary arrow stays and the brain rides below and right of it
+        hideNativeCursor: alone,
+        hotspotMark: alone,
+        offsetX: alone ? 0 : 20 * scale,
+        offsetY: alone ? 0 : 22 * scale,
+      }))
+      .then((c) => { window.brainCursor = c; })
+      .catch(() => {});
+  }
+
+  /* ---------- robot cursor (used when the brain cursor is off) ---------- */
+  if (!brainCursor) (() => {
     const BASE = "images/cursor/frames/robot-";
     const seq = (kind, n) => Array.from({ length: n }, (_, i) => `${BASE}${kind}-${String(i + 1).padStart(2, "0")}.png`);
     const sets = { idle: seq("idle", 10), run: seq("run", 8), aim: seq("aim", 4), attack: seq("attack", 8) };
@@ -404,8 +437,8 @@
     tick();
   })();
 
-  /* ---------- click sparks ---------- */
-  if (cfg.sparks !== undefined && !reduced) {
+  /* ---------- click sparks (the brain cursor throws its own) ---------- */
+  if (cfg.sparks !== undefined && !reduced && !brainCursor) {
     const cv = document.createElement("canvas");
     cv.className = "spark-canvas";
     cv.setAttribute("aria-hidden", "true");

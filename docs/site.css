@@ -9,6 +9,9 @@
 html { -webkit-text-size-adjust: 100%; }
 html, body, body * { cursor: var(--robot-cursor), auto !important; }
 a, button { cursor: var(--robot-cursor), pointer !important; }
+/* brain cursor with ?beside=1: the ordinary arrow and hand come back, and the brain rides beside them */
+html.brain-beside, html.brain-beside body, html.brain-beside body * { cursor: auto !important; }
+html.brain-beside a, html.brain-beside a *, html.brain-beside button { cursor: pointer !important; }
 img { max-width: 100%; }
 
 body {
