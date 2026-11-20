@@ -121,9 +121,19 @@ main, .foot { margin: 0 var(--rail); }
 .face img { display: block; width: 100%; height: auto; }
 
 /* typing: the words are in place from the start (invisible), so the page never jumps */
-.js-typing .type-reveal { visibility: hidden; }
-.js-typing .type-reveal.typed { visibility: visible; }
+.js-typing .type-reveal, .js-typing .type-after { visibility: hidden; }
+.js-typing .type-reveal.typed, .js-typing .type-after.typed { visibility: visible; }
 .t-off { visibility: hidden; }
+/* the paragraphs after the typed line: a pink glint sweeps across and leaves the words behind it */
+.type-after.shimmer {
+  color: transparent; -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(100deg, var(--k) 0%, var(--k) 40%, #e78fbf 47%, rgba(231, 143, 191, 0) 54%, rgba(231, 143, 191, 0) 100%);
+  background-size: 300% 100%; background-repeat: no-repeat; background-position: 100% 0;
+  -webkit-background-clip: text; background-clip: text;
+  animation: shimmer-in 1.5s cubic-bezier(0.3, 0.1, 0.2, 1) both, rise-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes shimmer-in { from { background-position: 100% 0; } to { background-position: 0 0; } }
+@keyframes rise-in { from { transform: translateY(8px); } to { transform: none; } }
 .typing .t-on::after {
   content: ""; position: absolute; width: 0.09em; height: 1.02em; margin: 0.2em 0 0 0.06em;
   background: var(--r); animation: caret-blink 0.9s steps(1, end) infinite;

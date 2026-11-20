@@ -49,8 +49,24 @@
 
   /* ---------- typing, started when the bio comes into view ---------- */
   const lines = Array.from(document.querySelectorAll(".type-reveal"));
+  // .type-after paragraphs are not typed: they arrive together when the typing ends,
+  // each under a pink glint that sweeps across it (plain and at once when motion is off)
+  const afters = Array.from(document.querySelectorAll(".type-after"));
+  const showAfters = (glint) => afters.forEach((el, i) => {
+    if (glint) {
+      el.style.animationDelay = `${i * 0.28}s`;
+      el.classList.add("shimmer");
+      el.addEventListener("animationend", (e) => {
+        if (e.animationName !== "shimmer-in") return;
+        el.classList.remove("shimmer");
+        el.style.animationDelay = "";
+      });
+    }
+    el.classList.add("typed");
+  });
   if (!lines.length || still) {
     lines.forEach((el) => el.classList.add("typed"));
+    showAfters(false);
     startBlink();
   } else {
     const parts = lines.map((el) => {
@@ -84,7 +100,7 @@
     };
     let idx = 0, started = false;
     const next = () => {
-      if (idx >= parts.length) return;
+      if (idx >= parts.length) { showAfters(true); return; }
       typeLine(parts[idx], () => {
         idx += 1;
         window.setTimeout(next, 220);
