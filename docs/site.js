@@ -2,7 +2,8 @@
      typing       the bio types itself once it scrolls into view
      name         held still; one span per letter; a letter blinks out now and then
      sand         the mouse scatters the giant line into grains that drift home
-     brain        sits where the name's "o" is (body[data-brain-as-o]); leans to the pointer
+     brain        sits where the name's "o" is (body[data-brain-as-o]); leans to the pointer;
+                  flicks back to the letter for a moment every few seconds
      robot cursor same frames and timings as the live site
      sparks       a click throws a few pixel sparks (body[data-sparks])
    body[data-fit-name] sizes the giant line so its widest word fills the row.
@@ -39,6 +40,7 @@
       while (picked.size < n) picked.add(Math.floor(Math.random() * chars.length));
       picked.forEach((i) => {
         const c = chars[i];
+        if (c.dataset.brainO !== undefined) return;      // the o under the brain has its own flick
         c.classList.add("is-masked");
         window.setTimeout(() => c.classList.remove("is-masked"), 130 + Math.random() * 290);
       });
@@ -145,15 +147,28 @@
   const oSpan = orb && name && cfg.brainAsO !== undefined ? chars.find((c) => c.textContent === "o") : null;
   // The letter stays until the model has loaded, then the brain takes its place.
   // If the model never loads (no WebGL, script blocked), the name simply stays whole.
+  // Every few seconds the brain flicks back to the letter for a moment, the way the other
+  // letters blink, so the name still reads "Nykko" (not when motion is off).
   if (oSpan) {
     const mv = orb.querySelector("model-viewer");
     let swapped = false;
+    const flick = () => {
+      delete oSpan.dataset.noink;
+      orb.classList.add("flick");
+      window.setTimeout(() => {
+        oSpan.dataset.noink = "";
+        orb.classList.remove("flick");
+      }, 380 + Math.random() * 280);
+      window.setTimeout(flick, 3400 + Math.random() * 3000);
+    };
     const swap = () => {
       if (swapped) return;
       swapped = true;
       requestAnimationFrame(() => requestAnimationFrame(() => {
         oSpan.dataset.noink = "";
+        oSpan.dataset.brainO = "";
         orb.classList.add("ready");
+        if (!still) window.setTimeout(flick, 1800 + Math.random() * 900);
       }));
     };
     if (mv) {
