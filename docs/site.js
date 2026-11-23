@@ -2,8 +2,11 @@
      typing       the bio types itself once it scrolls into view
      name         held still; one span per letter; a letter blinks out now and then
      sand         the mouse scatters the giant line into grains that drift home
+                  (body[data-sand]; switched off, no page carries it)
      brain        sits where the name's "o" is (body[data-brain-as-o]); leans to the pointer;
                   flicks back to the letter for a moment every few seconds
+     robot        a small language model in the visitor's browser runs the old robot as a
+                  character on the page (body[data-robot]; robot/robot.js)
      robot cursor same frames and timings as the live site
      sparks       a click throws a few pixel sparks (body[data-sparks])
    body[data-fit-name] sizes the giant line so its widest word fills the row.
@@ -152,15 +155,24 @@
   if (oSpan) {
     const mv = orb.querySelector("model-viewer");
     let swapped = false;
-    const flick = () => {
+    let letterTimer = 0;
+    const showLetter = (ms) => {
       delete oSpan.dataset.noink;
       orb.classList.add("flick");
-      window.setTimeout(() => {
+      window.clearTimeout(letterTimer);
+      letterTimer = window.setTimeout(() => {
         oSpan.dataset.noink = "";
         orb.classList.remove("flick");
-      }, 380 + Math.random() * 280);
+      }, ms);
+    };
+    const flick = () => {
+      showLetter(380 + Math.random() * 280);
       window.setTimeout(flick, 3400 + Math.random() * 3000);
     };
+    // the robot zapping the brain knocks it back to the letter for a moment
+    document.addEventListener("robot:zap", (e) => {
+      if (swapped && e.detail && e.detail.where === "brain") showLetter(700);
+    });
     const swap = () => {
       if (swapped) return;
       swapped = true;
@@ -186,9 +198,10 @@
     orb.style.top = (r.top - p.top + r.height * 0.5 + size * 0.1).toFixed(1) + "px";
   };
 
-  /* ---------- sand ---------- */
+  /* ---------- sand ----------
+     Off since Nov 22 2026 (Nyk): it only runs on a page whose body has data-sand, and no page does. */
   let sandLayout = null;
-  if (name && !reduced) {
+  if (name && !reduced && cfg.sand !== undefined) {
     const BACK = 1150, OUT = 380, MAX_HOLES = 24;
     let PAD = 70, R = 26, K = 1;
     const canvas = document.createElement("canvas");
@@ -424,6 +437,23 @@
         offsetY: alone ? 0 : 22 * scale,
       }))
       .then((c) => { window.brainCursor = c; })
+      .catch(() => {});
+  }
+
+  /* ---------- robot (body[data-robot]) ----------
+     The old robot cursor as a character on the page, run by a small language model in the
+     visitor's own browser (see robot/robot.js). Only for a real mouse or trackpad, with
+     motion allowed, in a browser that can run the model. The model loads by itself unless
+     the browser reports data saver or a slow connection. ?robot=off hides the robot;
+     ?robot=click makes it wait for a click (so does a still page, ?static=1);
+     ?robot=test shows it without the browser check and waits, for tests with a stand-in. */
+  if (cfg.robot !== undefined && !reduced && params.get("robot") !== "off"
+      && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    import("./robot/robot.js")
+      .then((m) => m.createRobot({
+        force: params.get("robot") === "test",
+        auto: !STATIC && params.get("robot") !== "test" && params.get("robot") !== "click",
+      }))
       .catch(() => {});
   }
 

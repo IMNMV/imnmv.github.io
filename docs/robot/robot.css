@@ -1,0 +1,42 @@
+/* The robot (see robot.js). It lives in page coordinates: .robot is a point at its feet. */
+.robot { position: absolute; left: 0; top: 0; width: 0; height: 0; z-index: 30; }
+.robot-body {
+  position: absolute; left: -32px; top: -61px; width: 64px; height: 64px;
+  margin: 0; padding: 0; border: 0; background: none; appearance: none; -webkit-appearance: none;
+}
+.robot-body:focus-visible { outline: 3px solid var(--k); outline-offset: 2px; }
+.robot-sprite {
+  display: block; width: 64px; height: 64px;
+  background: center / 64px 64px no-repeat;
+  image-rendering: pixelated;
+}
+.robot.left .robot-sprite { transform: scaleX(-1); }
+
+/* the label by the sleeping robot and its speech share one look: the brain's "That's me!" tag */
+.robot-label, .robot-say {
+  position: absolute; left: 0; bottom: 70px;
+  transform: translateX(calc(-50% + var(--dx, 0px)));
+  background: var(--k); color: var(--y);
+  box-shadow: 0 0 0 2px var(--y);      /* a thin edge, so it does not melt into the black letters */
+  font-family: "Silkscreen", monospace; letter-spacing: 1px; line-height: 1;
+  pointer-events: none;
+}
+.robot.below .robot-say { bottom: auto; top: 10px; }
+/* the label sits beside the sleeping robot, at its feet, in the strip under the name */
+.robot-label {
+  left: auto; right: 38px; bottom: 8px; transform: translateX(var(--dx, 0px));
+  font-size: 12px; white-space: nowrap; padding: 7px 9px; text-transform: uppercase;
+}
+.robot-say { width: max-content; max-width: 250px; padding: 9px 11px 8px; }
+/* its line is never cut short, so a longer one gets a wider box (robot.js sets the class) */
+.robot-say.long { max-width: 340px; }
+.robot-say.longer { max-width: 430px; }
+.robot-say.longer p { font-size: 12px; }
+.robot-say p { margin: 0; font-size: 13px; line-height: 1.4; }
+.robot-say small { display: block; margin-top: 7px; font-size: 10px; line-height: 1.3; opacity: 0.62; text-transform: uppercase; }
+.robot-label[hidden], .robot-say[hidden] { display: none; }
+
+/* what it points at is ringed for a moment, in the brain's pink */
+.robot-pointed { outline: 3px solid #e78fbf; outline-offset: 4px; }
+
+.robot-spark { position: absolute; left: 0; top: 0; z-index: 31; pointer-events: none; }
