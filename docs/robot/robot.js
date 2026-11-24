@@ -379,7 +379,7 @@ export async function createRobot({ force = false, auto = true } = {}) {
   // (its speak() gives the words); otherwise the line comes with the move.
   const act = async (a, mine, entry) => {
     const P = prompt();
-    const note = `${moveName(a)} · ${engine.standIn ? "test stand-in, not the model" : "tiny model, unedited"}`;
+    const note = engine.standIn ? `${moveName(a)} · test stand-in, not the model` : moveName(a);
     showSay(P.speak ? "" : a.say, note);
     if (a.do === "rest") return;
     const spot = spotFor(a.where);
