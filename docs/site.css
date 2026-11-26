@@ -105,6 +105,10 @@ main, .foot { margin: 0 var(--rail); }
   opacity: 0; visibility: hidden; transition: opacity 0.15s, visibility 0.15s; pointer-events: none;
 }
 .brain-orb:hover .brain-tooltip { opacity: 1; visibility: visible; }
+/* the tag now carries a second line, too wide to centre on a brain near the page's edge:
+   its right edge lines up with the brain's instead */
+.brain-tooltip { left: auto; right: 0; transform: none; }
+.brain-tooltip small { display: block; margin-top: 6px; font-size: 11px; }
 
 /* ---------- current focus bar: the line sits still, once, between two red squares ---------- */
 .ticker { display: flex; align-items: stretch; background: var(--k); color: var(--y); border-top: 3px solid var(--k); border-bottom: 3px solid var(--k); font-family: "Silkscreen", monospace; font-size: 16px; line-height: 1; letter-spacing: 1px; text-transform: uppercase; }

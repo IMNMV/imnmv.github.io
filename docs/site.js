@@ -1,6 +1,6 @@
 /* Billboard site, Nov 19 2026. The effects from the live site, adapted:
      typing       the bio types itself once it scrolls into view
-     name         held still; one span per letter; a letter blinks out now and then
+     name         held still; one span per letter; the letters no longer blink
      sand         the mouse scatters the giant line into grains that drift home
                   (body[data-sand]; switched off, no page carries it)
      brain        sits where the name's "o" is (body[data-brain-as-o]); leans to the pointer;
@@ -34,23 +34,8 @@
       name.appendChild(s);
     }
   }
+  // the letters stay still (Nykko, Nov 26 2026: no more blinking); only the brain's o flicks
   const chars = Array.from(document.querySelectorAll(".name-char"));
-  const startBlink = () => {
-    if (still || !chars.length) return;
-    const pulse = () => {
-      const n = Math.random() < 0.72 ? 1 : 2;
-      const picked = new Set();
-      while (picked.size < n) picked.add(Math.floor(Math.random() * chars.length));
-      picked.forEach((i) => {
-        const c = chars[i];
-        if (c.dataset.brainO !== undefined) return;      // the o under the brain has its own flick
-        c.classList.add("is-masked");
-        window.setTimeout(() => c.classList.remove("is-masked"), 130 + Math.random() * 290);
-      });
-      window.setTimeout(pulse, 860 + Math.random() * 1960);
-    };
-    window.setTimeout(pulse, 1200 + Math.random() * 1200);
-  };
 
   /* ---------- typing, started when the bio comes into view ---------- */
   const lines = Array.from(document.querySelectorAll(".type-reveal"));
@@ -72,7 +57,6 @@
   if (!lines.length || still) {
     lines.forEach((el) => el.classList.add("typed"));
     showAfters(false);
-    startBlink();
   } else {
     const parts = lines.map((el) => {
       const full = el.textContent.trim();
@@ -128,7 +112,6 @@
     } else {
       start();
     }
-    startBlink();
   }
 
   /* ---------- giant line sized to fill its row ---------- */
@@ -150,8 +133,8 @@
   const oSpan = orb && name && cfg.brainAsO !== undefined ? chars.find((c) => c.textContent === "o") : null;
   // The letter stays until the model has loaded, then the brain takes its place.
   // If the model never loads (no WebGL, script blocked), the name simply stays whole.
-  // Every few seconds the brain flicks back to the letter for a moment, the way the other
-  // letters blink, so the name still reads "Nykko" (not when motion is off).
+  // Every few seconds the brain flicks back to the letter for a moment, so the name still
+  // reads "Nykko" (not when motion is off).
   if (oSpan) {
     const mv = orb.querySelector("model-viewer");
     let swapped = false;

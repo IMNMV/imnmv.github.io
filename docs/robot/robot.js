@@ -6,9 +6,14 @@
    and, once it has walked there, what to say, with the words written at that place in front
    of it. Each answer is held to a fixed shape, so a move is always one of the allowed ones:
 
-     look   stand there               (idle frames)
-     point  aim at the place          (aim frames; the place is ringed for a moment)
-     zap    fire sparks at the place  (attack frames; sparks; the brain flicks to its letter)
+     look   stand there               (faces the visitor)
+     point  aim at the place          (turns to it; the place is ringed for a moment)
+     zap    fire sparks at the place  (turns to it, squashes and flashes; sparks; the brain
+                                       flicks to its letter)
+
+   Its body (Nyk's choice, Nov 26 2026) is the LLM bot head from /Users/nyk/gemini/brain-cursor
+   (llm_slices.png, classic palette: 20 slices of 24 x 26 pixels), drawn as a sprite stack by
+   the brain cursor's engine, so it turns to where it walks and to what it points at.
 
    It only goes to places the visitor can see, never follows a link, and visitors cannot
    type to it. Every word sent to the model is in prompt.js (approved by Nyk; change only
@@ -31,16 +36,25 @@
    window.__robotModel to another WebLLM build, and change window.robot.sampling and
    window.robot.pace. */
 import * as SITE_PROMPT from "./prompt.js";
+import { loadSliceSheet, SpriteStackRenderer, computeStackBounds, turnFromVelocity, lerpAngle } from "../brain-cursor/sprite-stack.js";
 
 // Nyk's pick, Nov 22 2026, after trying it in their own browser ("i like qwen"). Before that
 // the robot ran on SmolLM2-360M-Instruct-q4f16_1-MLC (207 MB), which mostly said the page's
 // text back; redesign/LOG.md has the runs of both and of Qwen3.5 0.8B.
 const MODEL_ID = "Qwen3-0.6B-q4f16_1-MLC";
 const MODEL_SIZE = "352 MB";                               // its download, shown on the label
+// the name in the "Powered by" note under each line (Nykko's wording and look, Nov 26 2026)
+const MODEL_NAMES = {
+  "Qwen3-0.6B-q4f16_1-MLC": "Qwen3 0.6B",
+  "Qwen3.5-0.8B-q4f16_1-MLC": "Qwen3.5 0.8B",
+  "SmolLM2-360M-Instruct-q4f16_1-MLC": "SmolLM2 360M",
+};
 const WEBLLM = "https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@0.2.89/lib/index.js";
-const FRAME_BASE = new URL("../images/cursor/frames/robot-", import.meta.url).href;
-const SETS = { idle: 10, run: 8, aim: 4, attack: 8 };
-const TIMINGS = { idle: 120, run: 70, aim: 90, attack: 60 };
+const SHEET = new URL("./llm_slices.png", import.meta.url).href;
+const SLICES = 20;
+// pixel scale, camera tilt, lift per slice and outline, as in the sheet's own settings
+const STACK = { scale: 2, squash: 0.75, spacing: 1.0, outline: "#1a1426", shadow: true };
+const ZAP_MS = 480;            // how long a zap's squash and flash last
 // rest between turns in ms, a multiplier on walking speed, and the reading time allowed per
 // word of its line in ms (a long line stays up longer); tests hurry all three
 const PACE = { pause: 3200, walk: 1, read: 260 };
@@ -117,9 +131,8 @@ export async function createRobot({ force = false, auto = true } = {}) {
   css.rel = "stylesheet";
   css.href = new URL("./robot.css", import.meta.url).href;
   await new Promise((done) => { css.onload = done; css.onerror = done; document.head.appendChild(css); });
-  for (const [kind, n] of Object.entries(SETS)) {
-    for (let i = 1; i <= n; i++) new Image().src = `${FRAME_BASE}${kind}-${String(i).padStart(2, "0")}.png`;
-  }
+  let sheet = null;
+  try { sheet = await loadSliceSheet(SHEET, SLICES); } catch (e) { console.error("robot:", e); return null; }
 
   /* ---------- body ---------- */
   const root = document.createElement("div");
@@ -128,9 +141,8 @@ export async function createRobot({ force = false, auto = true } = {}) {
   bodyEl.type = "button";
   bodyEl.className = "robot-body";
   bodyEl.setAttribute("aria-label", "Robot run by a small language model. Click to wake it or put it to sleep.");
-  const sprite = document.createElement("span");
+  const sprite = document.createElement("canvas");     // what is seen; the button is where a click lands
   sprite.className = "robot-sprite";
-  bodyEl.appendChild(sprite);
   const labelEl = document.createElement("span");
   labelEl.className = "robot-label";
   const sayEl = document.createElement("div");
@@ -139,12 +151,15 @@ export async function createRobot({ force = false, auto = true } = {}) {
   sayEl.setAttribute("aria-live", "polite");
   const sayText = document.createElement("p");
   const sayNote = document.createElement("small");
+  const noteMove = document.createElement("span");     // what it is doing, on the left
+  const noteBy = document.createElement("span");       // "Powered by" the model, on the right
+  sayNote.append(noteMove, noteBy);
   sayEl.append(sayText, sayNote);
-  root.append(bodyEl, labelEl, sayEl);
+  root.append(sprite, bodyEl, labelEl, sayEl);
   document.body.appendChild(root);
 
   const pos = { x: 0, y: 0 };          // its feet, in page coordinates
-  let facing = 1, anim = "idle", frame = 0, lastFit = 0;
+  let facing = 1, anim = "idle", lastFit = 0;
 
   const fit = () => {
     // keep the label or the speech on screen and inside the page's own column
@@ -165,13 +180,41 @@ export async function createRobot({ force = false, auto = true } = {}) {
     if (now - lastFit > 100) { lastFit = now; fit(); }
   };
   const face = (dir) => { facing = dir; root.classList.toggle("left", dir < 0); };
-  const setAnim = (a) => { if (a !== anim) { anim = a; frame = 0; } };
-  const tick = () => {
-    sprite.style.backgroundImage = `url("${FRAME_BASE}${anim}-${String((frame % SETS[anim]) + 1).padStart(2, "0")}.png")`;
-    frame += 1;
-    window.setTimeout(tick, TIMINGS[anim]);
+  const setAnim = (a) => { anim = a; };
+
+  /* ---------- its body: the bot head, drawn as a sprite stack about 30 times a second ---------- */
+  // It faces the way it walks (with a small hop), turns to what it points at or zaps (a zap
+  // squashes it and flashes it white), and otherwise faces the visitor, looking about a little.
+  const renderer = new SpriteStackRenderer();
+  const S = STACK.scale;
+  const bounds = computeStackBounds(sheet, Math.max(STACK.spacing, 2.5), Math.max(STACK.squash, 1));
+  sprite.width = bounds.width * S;
+  sprite.height = bounds.height * S;
+  const ink = sprite.getContext("2d");
+  const foot = Math.round((sheet.sliceHeight / 2) * STACK.squash) * S;   // so its base stands on its feet
+  sprite.style.left = `${-bounds.anchorX * S}px`;
+  sprite.style.top = `${-bounds.anchorY * S - foot}px`;
+  let turn = 0, heading = 0, aimAt = null, zapAt = -1e9, drawnAt = 0;
+  const forward = () => ({ x: -Math.sin(turn), y: Math.cos(turn) });    // the way its screen faces
+  const draw = (now) => {
+    window.requestAnimationFrame(draw);
+    if (now - drawnAt < 32) return;
+    drawnAt = now;
+    const want = anim === "run" ? heading
+      : aimAt ? turnFromVelocity(aimAt.x - pos.x, aimAt.y - pos.y)
+      : Math.sin(now / 1400) * 0.35;
+    turn = lerpAngle(turn, want, anim === "run" ? 0.3 : 0.16);
+    const z = (now - zapAt) / ZAP_MS;
+    const zapping = z >= 0 && z < 1;
+    const hop = anim === "run" ? Math.round(Math.abs(Math.sin(now / 95)) * 3) * S : 0;
+    ink.clearRect(0, 0, sprite.width, sprite.height);
+    renderer.draw(ink, sheet, { x: bounds.anchorX * S, y: bounds.anchorY * S - hop }, turn, {
+      ...STACK,
+      squash: zapping ? STACK.squash * (1 - 0.3 * Math.sin(z * Math.PI)) : STACK.squash,
+      flash: zapping ? 0.7 * (1 - z) : 0,
+    });
   };
-  tick();
+  window.requestAnimationFrame(draw);
 
   const setLabel = (text) => {
     labelEl.hidden = !text;
@@ -179,13 +222,16 @@ export async function createRobot({ force = false, auto = true } = {}) {
     if (text) sayEl.hidden = true;
     fit();
   };
-  const showSay = (text, note) => {
+  const showSay = (text, move) => {
     labelEl.hidden = true;
     sayText.textContent = text;
     sayText.hidden = !text;
-    sayNote.textContent = note || "";
-    sayNote.hidden = !note;
-    sayEl.hidden = !text && !note;
+    noteMove.textContent = move || "";
+    noteBy.textContent = !engine ? ""
+      : engine.standIn ? "test stand-in, not the model"
+      : `Powered by ${MODEL_NAMES[modelInUse()] || modelInUse()}`;
+    sayNote.hidden = !noteMove.textContent && !noteBy.textContent;
+    sayEl.hidden = !text && sayNote.hidden;
     // a longer line gets a wider box
     sayEl.classList.toggle("long", !!text && text.length > 70 && text.length <= 170);
     sayEl.classList.toggle("longer", !!text && text.length > 170);
@@ -207,6 +253,7 @@ export async function createRobot({ force = false, auto = true } = {}) {
     if (total < 6) { done(); return; }
     const speed = Math.max(300, total / 2.4) * PACE.walk;
     if (Math.abs(tx - pos.x) > 4) face(tx > pos.x ? 1 : -1);
+    heading = turnFromVelocity(tx - pos.x, ty - pos.y);
     setAnim("run");
     let last = performance.now();
     const step = (now) => {
@@ -379,7 +426,7 @@ export async function createRobot({ force = false, auto = true } = {}) {
   // (its speak() gives the words); otherwise the line comes with the move.
   const act = async (a, mine, entry) => {
     const P = prompt();
-    const note = engine.standIn ? `${moveName(a)} · test stand-in, not the model` : moveName(a);
+    const note = moveName(a);
     showSay(P.speak ? "" : a.say, note);
     if (a.do === "rest") return;
     const spot = spotFor(a.where);
@@ -402,16 +449,23 @@ export async function createRobot({ force = false, auto = true } = {}) {
     if (a.do === "point") {
       const el = a.where === "visitor" ? null : placeByKey(a.where).el;
       setAnim("aim");
+      aimAt = c;
       if (el) el.classList.add("robot-pointed");
       await pause(1600);
       if (el) el.classList.remove("robot-pointed");
+      aimAt = null;
       setAnim("idle");
     } else if (a.do === "zap") {
       setAnim("attack");
-      await pause(TIMINGS.attack * SETS.attack);
+      aimAt = c;
+      await pause(350);                    // turns to it first
+      zapAt = performance.now();
+      await pause(ZAP_MS);
+      aimAt = null;
       setAnim("idle");
       if (token !== mine) return;
-      sparks(pos.x + facing * 40, pos.y - 44);
+      const f = forward();
+      sparks(pos.x + f.x * 30, pos.y - 34 + f.y * 14);
       if (a.where === "brain") sparks(c.x, c.y);
       document.dispatchEvent(new CustomEvent("robot:zap", { detail: { where: a.where } }));
     }
@@ -422,6 +476,7 @@ export async function createRobot({ force = false, auto = true } = {}) {
     token += 1;
     if (cut) cut();
     document.querySelectorAll(".robot-pointed").forEach((el) => el.classList.remove("robot-pointed"));
+    aimAt = null;
     setLabel(label || "CLICK TO WAKE");
     const h = home();
     at = "focus";
