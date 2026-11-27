@@ -7,8 +7,9 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-html, body, body * { cursor: var(--robot-cursor), auto !important; }
-a, button { cursor: var(--robot-cursor), pointer !important; }
+/* the ordinary pointer, except with ?cursor=robot (site.js adds the class) */
+html.robot-cursor, html.robot-cursor body, html.robot-cursor body * { cursor: var(--robot-cursor), auto !important; }
+html.robot-cursor a, html.robot-cursor button { cursor: var(--robot-cursor), pointer !important; }
 /* brain cursor with ?beside=1: the ordinary arrow and hand come back, and the brain rides beside them */
 html.brain-beside, html.brain-beside body, html.brain-beside body * { cursor: auto !important; }
 html.brain-beside a, html.brain-beside a *, html.brain-beside button { cursor: pointer !important; }
@@ -109,6 +110,34 @@ main, .foot { margin: 0 var(--rail); }
    its right edge lines up with the brain's instead */
 .brain-tooltip { left: auto; right: 0; transform: none; }
 .brain-tooltip small { display: block; margin-top: 6px; font-size: 11px; }
+
+/* ---------- name intro (home page: site.js, body[data-intro]; Nykko's pick, Nov 27 2026) ----------
+   While the name shrinks, the hero keeps its full height and sticks once only its bottom strip,
+   the header, is left on screen (site.js sets --intro-dh); at the end (.intro-done) the hero
+   becomes a real header and the space above it goes. The header's sizes are mirrored in site.js
+   (HS, PADT, PADB): change them together. */
+/* Chrome's scroll anchoring anchored on the bio's untyped words and scrolled the page each time
+   the typing wrapped a line (seen Nov 26 2026); it would also fight the intro's own scroll moves */
+.type-reveal, .type-after { overflow-anchor: none; }
+html.intro, html.intro body { overflow-anchor: none; }
+html.intro .hero { position: sticky; top: calc(var(--intro-dh, 0px) * -1); z-index: 15; background: var(--y); }
+/* the header's rule; at the top of the page it sits on the black focus bar and cannot be seen */
+html.intro .hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--k); }
+html.intro:not(.intro-done) .name-char, html.intro:not(.intro-done) .brain-orb { transform-origin: 0 0; }
+html.intro.intro-done .hero { top: 0; padding: 14px var(--pad) 12px; overflow: visible; }
+html.intro-done .name-row h1 { font-size: var(--intro-hs, 54px) !important; padding-bottom: 0; }
+html.intro-done .stack .name-gap { display: inline-block; width: 0.28em; height: 1px; }
+/* the brain's tag opens below it in the header, where there is room */
+html.intro-done .brain-tooltip { bottom: auto; top: 100%; left: 0; right: auto; margin-top: 8px; }
+/* the name as it will sit in the header: measured by site.js, never seen */
+.intro-measure {
+  position: absolute; margin: 0; padding: 0; visibility: hidden; pointer-events: none;
+  font-family: "Recursive", sans-serif; font-variation-settings: "CASL" 0, "wght" 500, "slnt" 0;
+  font-weight: 500; line-height: 0.86; letter-spacing: -0.035em; white-space: nowrap;
+}
+.intro-measure .name-char { display: inline-block; }
+.intro-measure .name-gap { display: inline-block; width: 0.28em; height: 1px; }
+html.intro-done .intro-measure { display: none; }
 
 /* ---------- current focus bar: the line sits still, once, between two red squares ---------- */
 .ticker { display: flex; align-items: stretch; background: var(--k); color: var(--y); border-top: 3px solid var(--k); border-bottom: 3px solid var(--k); font-family: "Silkscreen", monospace; font-size: 16px; line-height: 1; letter-spacing: 1px; text-transform: uppercase; }

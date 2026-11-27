@@ -1,13 +1,15 @@
 /* Billboard site, Nov 19 2026. The effects from the live site, adapted:
      typing       the bio types itself once it scrolls into view
      name         held still; one span per letter; the letters no longer blink
+     intro        the giant name shrinks into a header and the page rises under it (body[data-intro])
      sand         the mouse scatters the giant line into grains that drift home
                   (body[data-sand]; switched off, no page carries it)
      brain        sits where the name's "o" is (body[data-brain-as-o]); leans to the pointer;
                   flicks back to the letter for a moment every few seconds
      robot        a small language model in the visitor's browser runs the old robot as a
                   character on the page (body[data-robot]; robot/robot.js)
-     robot cursor same frames and timings as the live site
+     pointer      the ordinary arrow; ?cursor=brain the pixel brain, ?cursor=robot the old
+                  robot frames (same frames and timings as the old live site)
      sparks       a click throws a few pixel sparks (body[data-sparks])
    body[data-fit-name] sizes the giant line so its widest word fills the row.
    ?static=1 skips the typing (for screenshots). */
@@ -116,7 +118,8 @@
 
   /* ---------- giant line sized to fill its row ---------- */
   const fitName = () => {
-    if (!name || cfg.fitName === undefined) return;
+    // once the intro has made the name a header, the stylesheet sets its size
+    if (!name || cfg.fitName === undefined || root.classList.contains("intro-done")) return;
     const target = row.clientWidth;
     name.style.fontSize = "100px";
     let widest = 0, run = 0;
@@ -362,10 +365,14 @@
     }
   }
 
+  let intro = null;    // the name intro, on the home page (below)
   const layoutAll = () => {
+    // sizing the name and placing the brain measure the letters, so the intro's moves come off first
+    if (intro) intro.clear();
     fitName();
     if (sandLayout) sandLayout();
     placeOrb();
+    if (intro) intro.measure();
   };
   if (name) {
     window.addEventListener("resize", layoutAll);
@@ -373,6 +380,200 @@
     if (document.fonts) document.fonts.ready.then(layoutAll);
     layoutAll();
   }
+
+  /* ---------- name intro (body[data-intro]) ----------
+     Nykko's pick, Nov 27 2026 (mockup A, "Glide"; the trials are in mockups/intro/). The giant
+     name holds for a moment, then shrinks into a header while the page rises under it.
+       - The hero keeps its full height and sticks once only its bottom strip, the header, is on
+         screen. Each letter and the brain move from the giant name to their place in the header
+         by how far the page has scrolled through the height the name gives up (dh).
+       - Nobody scrolls: once the brain is in, after HOLD, the page glides down by dh, which plays it.
+       - Someone scrolls early or fast: their own scroll plays it, as fast as they go (a light
+         follower turns a sudden jump into a quick shrink instead of a snap).
+       - Someone stops halfway: it finishes by itself.
+       - Once the header is reached and the page is still, the hero becomes a real header and the
+         scroll moves up by the space that goes, in the same frame, so nothing on screen jumps.
+     No letter may fall behind the page's own pace (its share of the move must stay at least the
+     scroll's), or the rising edge of the hero would cut it off: "Nykko" shrinks early, "Vitali"
+     slides right early and climbs with the page, so it passes under "Nykko", not through it.
+     Motion off, or coming back to a scrolled page (reload, back): straight to the header.
+     ?static=1 keeps the giant name. */
+  if (cfg.intro !== undefined && name && row && !STATIC) intro = (() => {
+    const HS = 54, PADT = 14, PADB = 12;    // header name size and padding (also in site.css)
+    const HOLD = 1200, GLIDE = 1100;        // ms the giant name holds; ms the move takes by itself
+    const KEY = "home-scroll";              // where this page was left, for a reload or back
+    const hero = row.closest(".hero");
+    const oIndex = oSpan ? chars.indexOf(oSpan) : chars.findIndex((c) => c.textContent === "o");
+    const gapAt = chars.findIndex((c) => c.previousElementSibling && c.previousElementSibling.classList.contains("name-gap"));
+    root.style.setProperty("--intro-hs", HS + "px");
+
+    // the name as it will sit in the header: never seen, only measured
+    const m = document.createElement("div");
+    m.className = "intro-measure";
+    m.setAttribute("aria-hidden", "true");
+    for (const el of name.children) {
+      const s = document.createElement("span");
+      s.className = el.className;
+      s.textContent = el.textContent;
+      m.appendChild(s);
+    }
+    hero.appendChild(m);
+    const mChars = Array.from(m.querySelectorAll(".name-char"));
+
+    let dh = 0, top0 = 0, moves = [], orbMove = null, ready = false, done = false, shown = 0;
+    const clamp = (x) => Math.min(1, Math.max(0, x));
+    // how far the page is through the move: it starts when the hero reaches the top of the window
+    // (at once on a wide screen; on a phone the page and link bars sit above it) and ends dh later
+    const progress = () => (dh ? clamp((window.scrollY - top0) / dh) : 0);
+    const out3 = (t) => 1 - Math.pow(1 - t, 3);
+    const inOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+    const clear = () => {
+      chars.forEach((c) => { c.style.transform = ""; });
+      if (orb) { orb.style.translate = ""; orb.style.scale = ""; }
+    };
+    const measure = () => {
+      if (done) return;
+      const bigSize = parseFloat(getComputedStyle(name).fontSize);
+      dh = Math.max(0, hero.offsetHeight - (HS * 0.86 + PADT + PADB));
+      top0 = hero.parentElement.getBoundingClientRect().top + window.scrollY;   // main, which the hero opens
+      root.style.setProperty("--intro-dh", dh + "px");
+      m.style.fontSize = HS + "px";
+      m.style.left = getComputedStyle(hero).paddingLeft;
+      m.style.top = dh + PADT + "px";
+      const H = hero.getBoundingClientRect();
+      const at = (el) => { const r = el.getBoundingClientRect(); return { x: r.left - H.left, y: r.top - H.top, w: r.width, h: r.height }; };
+      const s = HS / bigSize;
+      moves = chars.map((c, i) => {
+        const F = at(c), M = at(mChars[i]);
+        return { dx: M.x - F.x, dy: M.y - F.y, s };
+      });
+      if (orb && oIndex >= 0) {
+        // the brain's centre, by the rule placeOrb uses: on the letter, a tenth of the size lower
+        const F = at(chars[oIndex]), M = at(mChars[oIndex]);
+        orbMove = {
+          dx: M.x + M.w / 2 - (F.x + F.w / 2),
+          dy: M.y + M.h * 0.5 + HS * 0.1 - (F.y + F.h * 0.5 + bigSize * 0.1),
+          s,
+        };
+      }
+      root.classList.add("intro");
+      ready = true;
+      apply(shown);
+    };
+
+    // paths are drawn on the screen, not in the hero: the hero rides up with the scroll, so that
+    // share (dh times the scroll) is added back
+    const axes = (p, i) => {
+      const second = gapAt > 0 && i >= gapAt;
+      return { x: out3(p), y: second ? p : out3(p), s: out3(p) };
+    };
+    const step = (mv, e, ps) => ({ x: mv.dx * e.x, y: (mv.dy - dh) * e.y + dh * ps, s: 1 + (mv.s - 1) * e.s });
+    const apply = (p) => {
+      if (!ready || done) return;
+      const ps = progress();
+      chars.forEach((c, i) => {
+        const t = step(moves[i], axes(p, i), ps);
+        c.style.transform = p || ps ? `translate(${t.x.toFixed(2)}px, ${t.y.toFixed(2)}px) scale(${t.s.toFixed(4)})` : "";
+      });
+      if (orbMove) {
+        const t = step(orbMove, axes(p, oIndex), ps);
+        orb.style.translate = p || ps ? `${t.x.toFixed(2)}px ${t.y.toFixed(2)}px` : "";
+        orb.style.scale = p || ps ? t.s.toFixed(4) : "";
+      }
+    };
+
+    // the end: the hero becomes a real header; the scroll moves up by the space that goes, so
+    // nothing on screen moves; the robot is told, as it stands in page coordinates
+    const finish = () => {
+      if (done) return;
+      const y = window.scrollY, before = hero.offsetHeight;
+      done = true;
+      clear();
+      root.classList.add("intro", "intro-done");
+      const gone = before - hero.offsetHeight;
+      placeOrb();
+      window.scrollTo(0, Math.max(0, y - gone));
+      document.dispatchEvent(new CustomEvent("intro:done", { detail: { dy: -gone } }));
+    };
+
+    // ---------- who moves the page ----------
+    let gliding = null, expectY = null, lastUser = -1e9, lastScroll = performance.now(), startAt = Infinity, held = false;
+    const glideTo = (to, ms) => { gliding = { from: window.scrollY, to, t0: performance.now(), ms }; };
+    const stopGlide = () => { gliding = null; expectY = null; };
+    const userInput = () => { lastUser = performance.now(); stopGlide(); };
+    window.addEventListener("wheel", userInput, { passive: true });
+    window.addEventListener("touchmove", userInput, { passive: true });
+    window.addEventListener("keydown", (e) => {
+      if ([" ", "PageDown", "PageUp", "ArrowDown", "ArrowUp", "Home", "End"].includes(e.key)) userInput();
+    });
+    window.addEventListener("scroll", () => {
+      lastScroll = performance.now();
+      // a scroll the glide did not make is the visitor's (the scrollbar, say)
+      if (gliding && expectY !== null && Math.abs(window.scrollY - expectY) > 3) userInput();
+    }, { passive: true });
+
+    let last = performance.now();
+    const loop = (now) => {
+      if (done) return;
+      const dt = Math.min(now - last, 100);
+      last = now;
+      if (gliding) {
+        const t = clamp((now - gliding.t0) / gliding.ms);
+        const y = gliding.from + (gliding.to - gliding.from) * inOut(t);
+        expectY = Math.round(y);
+        window.scrollTo(0, y);
+        if (t >= 1) stopGlide();
+      }
+      const p = progress();
+      shown += (p - shown) * (1 - Math.exp(-dt / 55));
+      if (Math.abs(p - shown) < 0.0005) shown = p;
+      apply(shown);
+      // nobody has scrolled: after the hold, play it
+      if (!held && ready && now >= startAt) {
+        held = true;
+        if (window.scrollY < 2 && now - lastUser > 400) glideTo(top0 + dh, GLIDE);
+      }
+      // the page is still: at the header, finish; halfway, glide the rest
+      if (ready && !gliding && now - lastScroll > 180 && now - lastUser > 500) {
+        if (p >= 1 && shown > 0.999) { finish(); return; }
+        if (p > 0 && now - lastScroll > 500) glideTo(top0 + dh, 500);
+      }
+      requestAnimationFrame(loop);
+    };
+
+    // a reload or a step back lands where the page was left, already a header
+    let saved = null;
+    try { saved = JSON.parse(window.sessionStorage.getItem(KEY) || "null"); } catch (e) { /* storage off */ }
+    window.addEventListener("pagehide", () => {
+      try { window.sessionStorage.setItem(KEY, JSON.stringify({ y: window.scrollY, done })); } catch (e) { /* storage off */ }
+    });
+    const nav = (performance.getEntriesByType && performance.getEntriesByType("navigation")[0]) || {};
+    const back = saved && saved.y > 0 && (nav.type === "reload" || nav.type === "back_forward");
+    try { window.history.scrollRestoration = "manual"; } catch (e) { /* the browser keeps its own */ }
+
+    if (reduced || (back && saved.done)) {
+      finish();
+      if (back) window.scrollTo(0, saved.y);
+    } else {
+      if (back) window.scrollTo(0, saved.y);
+      measure();
+      shown = progress();
+      apply(shown);
+      // hold until the brain has come in (3 s at most), then HOLD more
+      (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => {
+        const t0 = performance.now();
+        const wait = () => {
+          const brainIn = !orb || orb.classList.contains("ready");
+          if (brainIn || performance.now() - t0 > 3000) startAt = performance.now() + (brainIn ? HOLD : 0);
+          else window.setTimeout(wait, 100);
+        };
+        wait();
+      });
+      requestAnimationFrame(loop);
+    }
+    return { clear: () => { if (!done) clear(); }, measure };
+  })();
 
   /* ---------- brain leans toward the pointer ---------- */
   if (orb && !reduced) {
@@ -390,13 +591,12 @@
     });
   }
 
-  /* ---------- brain cursor (body[data-brain-cursor]) ----------
-     A small pixel brain follows the pointer, turns the way it moves, spins when it rests
-     and squashes on a click. It only starts for a real mouse or trackpad, and not when
-     the visitor asks for less motion. If it cannot load, the ordinary pointer stays. */
+  /* ---------- brain cursor (body[data-brain-cursor], only with ?cursor=brain) ----------
+     The ordinary pointer since Nov 26 2026 (Nykko). ?cursor=brain brings back the small
+     pixel brain that follows the pointer, turns the way it moves, spins when it rests and
+     squashes on a click; ?cursor=robot the old robot frames. */
   const params = new URLSearchParams(location.search);
-  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches || params.get("cursor") === "brain";
-  const brainCursor = cfg.brainCursor !== undefined && finePointer && !reduced && params.get("cursor") !== "robot";
+  const brainCursor = cfg.brainCursor !== undefined && params.get("cursor") === "brain" && !reduced;
   if (brainCursor) {
     // the brain is the pointer: the ordinary arrow is hidden and the brain sits on the click point.
     // ?beside=1 brings the arrow back and puts the brain next to it instead
@@ -440,8 +640,9 @@
       .catch(() => {});
   }
 
-  /* ---------- robot cursor (used when the brain cursor is off) ---------- */
-  if (!brainCursor) (() => {
+  /* ---------- robot cursor (only with ?cursor=robot) ---------- */
+  if (params.get("cursor") === "robot") (() => {
+    root.classList.add("robot-cursor");
     const BASE = "images/cursor/frames/robot-";
     const seq = (kind, n) => Array.from({ length: n }, (_, i) => `${BASE}${kind}-${String(i + 1).padStart(2, "0")}.png`);
     const sets = { idle: seq("idle", 10), run: seq("run", 8), aim: seq("aim", 4), attack: seq("attack", 8) };

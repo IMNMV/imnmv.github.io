@@ -256,7 +256,10 @@ export async function createRobot({ force = false, auto = true } = {}) {
 
   /* ---------- moving ---------- */
   let token = 0;                       // changes whenever the robot is woken or put to sleep
-  const walkTo = (tx, ty, mine) => new Promise((done) => {
+  let shiftY = 0;                      // how far the page has moved under it (the name intro, below)
+  const walkTo = (tx, ty0, mine) => new Promise((done) => {
+    const s0 = shiftY;
+    let ty = ty0;
     const total = Math.hypot(tx - pos.x, ty - pos.y);
     if (total < 6) { done(); return; }
     const speed = Math.max(300, total / 2.4) * PACE.walk;
@@ -268,6 +271,7 @@ export async function createRobot({ force = false, auto = true } = {}) {
       if (token !== mine) { done(); return; }
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
+      ty = ty0 + shiftY - s0;            // the spot moves with the page
       const dx = tx - pos.x, dy = ty - pos.y, d = Math.hypot(dx, dy), s = speed * dt;
       if (d <= s) {
         pos.x = tx; pos.y = ty;
@@ -602,6 +606,17 @@ export async function createRobot({ force = false, auto = true } = {}) {
       if (state === "awake" && !inView() && cut) cut();
     }, 250);
   }, { passive: true });
+  // the home page's name intro (site.js) ends by taking out the space the giant name held and
+  // scrolling up by as much, so everything on the page moves up by that in page coordinates
+  document.addEventListener("intro:done", (e) => {
+    const dy = (e.detail && e.detail.dy) || 0;
+    if (!dy) return;
+    shiftY += dy;
+    pos.y += dy;
+    if (aimAt) aimAt = { x: aimAt.x, y: aimAt.y + dy };
+    place();
+    settle();
+  });
   window.addEventListener("resize", settle);
   window.addEventListener("load", settle);
   if (document.fonts) document.fonts.ready.then(settle);
