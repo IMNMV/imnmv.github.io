@@ -1,6 +1,6 @@
 /* The robot (see robot.js). It lives in page coordinates: .robot is a point at its feet. */
 .robot { position: absolute; left: 0; top: 0; width: 0; height: 0; z-index: 30; }
-/* the bot head is a canvas placed by robot.js; the button over it is where a click lands */
+/* the robot is a canvas placed by robot.js; the button over it is where a click lands */
 .robot-body {
   position: absolute; left: -27px; top: -80px; width: 54px; height: 84px;
   margin: 0; padding: 0; border: 0; background: none; appearance: none; -webkit-appearance: none;

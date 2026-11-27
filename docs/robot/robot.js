@@ -11,9 +11,10 @@
      zap    fire sparks at the place  (turns to it, squashes and flashes; sparks; the brain
                                        flicks to its letter)
 
-   Its body (Nyk's choice, Nov 26 2026) is the LLM bot head from /Users/nyk/gemini/brain-cursor
-   (llm_slices.png, classic palette: 20 slices of 24 x 26 pixels), drawn as a sprite stack by
+   Its body (Nyk's choice, Nov 26 2026) is the bipedal robot from /Users/nyk/gemini/brain-cursor
+   (robot_slices.png, classic palette: 27 slices of 24 x 22 pixels), drawn as a sprite stack by
    the brain cursor's engine, so it turns to where it walks and to what it points at.
+   ?body=head brings back the LLM bot head it had before (llm_slices.png).
 
    It only goes to places the visitor can see, never follows a link, and visitors cannot
    type to it. Every word sent to the model is in prompt.js (approved by Nyk; change only
@@ -50,10 +51,17 @@ const MODEL_NAMES = {
   "SmolLM2-360M-Instruct-q4f16_1-MLC": "SmolLM2 360M",
 };
 const WEBLLM = "https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@0.2.89/lib/index.js";
-const SHEET = new URL("./llm_slices.png", import.meta.url).href;
-const SLICES = 20;
-// pixel scale, camera tilt, lift per slice and outline, as in the sheet's own settings
-const STACK = { scale: 2, squash: 0.75, spacing: 1.0, outline: "#1a1426", shadow: true };
+// the body: sheet, slice count and outline, as in each sheet's own settings
+// (both from /Users/nyk/gemini/brain-cursor; the bipedal robot since Nov 26 2026, ?body=head for the old head)
+const BODIES = {
+  biped: { sheet: "./robot_slices.png", slices: 27, outline: "#16182a" },
+  head: { sheet: "./llm_slices.png", slices: 20, outline: "#1a1426" },
+};
+const BODY = BODIES[new URLSearchParams(window.location.search).get("body")] || BODIES.biped;
+const SHEET = new URL(BODY.sheet, import.meta.url).href;
+const SLICES = BODY.slices;
+// pixel scale, camera tilt, lift per slice and outline
+const STACK = { scale: 2, squash: 0.75, spacing: 1.0, outline: BODY.outline, shadow: true };
 const ZAP_MS = 480;            // how long a zap's squash and flash last
 // rest between turns in ms, a multiplier on walking speed, and the reading time allowed per
 // word of its line in ms (a long line stays up longer); tests hurry all three
@@ -182,7 +190,7 @@ export async function createRobot({ force = false, auto = true } = {}) {
   const face = (dir) => { facing = dir; root.classList.toggle("left", dir < 0); };
   const setAnim = (a) => { anim = a; };
 
-  /* ---------- its body: the bot head, drawn as a sprite stack about 30 times a second ---------- */
+  /* ---------- its body: the bipedal robot, drawn as a sprite stack about 30 times a second ---------- */
   // It faces the way it walks (with a small hop), turns to what it points at or zaps (a zap
   // squashes it and flashes it white), and otherwise faces the visitor, looking about a little.
   const renderer = new SpriteStackRenderer();
